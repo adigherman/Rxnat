@@ -2,7 +2,7 @@ library(shiny)
 library(nitrcbot)
 
 #nitrc_sets_all <- list_image_sets()
-sets <- list("NITRC" = nitrc_sets_all[,c("ID","Name","Subjects","Description")])
+sets <- list("NITRC" = lapply(nitrc_sets_all[,c("ID","Name","Subjects","Description")], as.character))
 
 ui <- fluidPage(
   titlePanel("neuroCluster"),
@@ -29,7 +29,7 @@ server <- function(input, output) {
   })
 
   output$selected_dataset_subjects_nr <- renderText({
-    paste0("Subjects: ",sets[[input$DatasetSelection]]$Subjects[sets[[input$DatasetSelection]]$ID == input$ProjectSelection]);
+    paste0(strong("Subjects: "),sets[[input$DatasetSelection]]$Subjects[sets[[input$DatasetSelection]]$ID == input$ProjectSelection]);
   })
 
   output$selected_dataset_description <- renderText({
