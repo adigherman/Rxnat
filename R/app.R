@@ -29,7 +29,7 @@ server <- function(input, output) {
   })
 
   output$selected_dataset_subjects_nr <- renderText({
-    paste0(strong("Subjects: "),sets[[input$DatasetSelection]]$Subjects[sets[[input$DatasetSelection]]$ID == input$ProjectSelection]);
+    paste0("Subjects: ",sets[[input$DatasetSelection]]$Subjects[sets[[input$DatasetSelection]]$ID == input$ProjectSelection]);
   })
 
   output$selected_dataset_description <- renderText({
