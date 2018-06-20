@@ -1,7 +1,8 @@
-Package: neuroCluster
-Version: 0.0.0.9000
-Title: Retrieves Images from Public/Private Datasets.
-Description: What the package does (one paragraph).
+Package: xnatR
+Version: 0.0.0.9001
+Title: Query/retrieve Images from XNAT Public/Private Datasets.
+Description: This package will allow a user to query and extract subsets of images
+ from a private/public XNAT dataset.
 Authors@R: person("Adi", "Gherman", , "adig@jhu.edu", c("aut", "cre"))
 Imports: shiny, RCurl, httr
 License: GPL-2
