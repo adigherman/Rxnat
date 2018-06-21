@@ -281,7 +281,7 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
 #' \dontrun{xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")}
 #'
 #' @return \code{projects}
-#' @importFrom RCurl basicTextGatherer curlPerform
+#' @importFrom RCurl basicTextGatherer curlPerform parseHTTPHeader
 #' @export
 xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
 {
@@ -316,7 +316,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     if(is.null(.projects)) {
       data <- xnat_call('/data/projects?format=csv')
       csv <- string2csv(data)
-      csv <- csv[with(csv, order(ID)),]
+      csv <- csv[with(csv, order(csv[,1])),]
       rownames(csv) <- 1:nrow(csv)
       .projects <<- csv
     }

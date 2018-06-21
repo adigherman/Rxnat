@@ -1,4 +1,4 @@
-# xnatR: Query and retrieves neuro images from various public/private XNAT datasets
+# xnatR: Query and retrieves neuroimaging sets from XNAT projects
 
 ## What is XNAT?
 XNAT is an open source imaging informatics platform developed by the Neuroinformatics Research Group at Washington University. XNAT was originally developed in the Buckner Lab at Washington University, now at Harvard University. It facilitates common management, productivity, and quality assurance tasks for imaging and associated data. Thanks to its extensibility, XNAT can be used to support a wide range of imaging-based projects.
@@ -15,8 +15,13 @@ For a more complete list of XNAT implementations around the world you can click 
 ## Installing the xnatR package
 
 You can install `xnatR` from github with:
-
 ``` {r}
 # install.packages("devtools")
 devtools::install_github("adigherman/xnatR")
 ```
+
+## Accessing XNAT Data
+
+XNAT projects can be public or private. In order to access a private repository a set of credentials/keys are required. The `xnatR` package will accept 
+
+In order to access the NITRC data, a user account is required. One can be requested [here](https://www.nitrc.org/account/register.php). Some of the projects are public and can be accessed right away, while some others will need an additional access request.
