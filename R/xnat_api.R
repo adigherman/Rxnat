@@ -282,6 +282,7 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
 #'
 #' @return \code{projects}
 #' @importFrom RCurl basicTextGatherer curlPerform parseHTTPHeader
+#' @importFrom httr set_cookies
 #' @export
 xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
 {
@@ -309,7 +310,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
 
   close <- function() {
     data <- xnat_call('/data/JSESSION', customrequest = 'DELETE')
-    jsid <<- NULL
+    jsid <- NULL
   }
 
   projects <- function() {
@@ -324,8 +325,6 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   }
 
   scans <- function(...) {
-
-    #return(message(get_scan_parameters_search_xml(...)))
     data <- xnat_call('/data/search?format=csv',
                       data = get_scan_parameters_search_xml(...))
     csv <- string2csv(data)
@@ -472,7 +471,6 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   }
 
   get_xnat_experiment_resources <- function(experiment_ID) {
-    "Get all reources associated with a specific experiment ID"
     data <- xnat_call(paste0('/data/experiments/',experiment_ID,'/scans/ALL/files?format=csv'))
     csv <- string2csv(data)
 
@@ -494,7 +492,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     args = list(
       url = paste0(base_url,file_path),
       write_disk(path = destfile,
-                 overwrite = TRUE)
+                 overwrite = TRUE),
+      set_cookies(JSESSIONID = jsid)
     )
     if (verbose) {
       args = c(args, list(progress()))
@@ -513,23 +512,69 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     }
   }
 
+  download_dir <- function(experiment_ID,
+                           scan_type = NULL,
+                           zipped = TRUE,
+                           verbose = FALSE,
+                           error = FALSE){
+
+    if(zipped) {
+      url_address <- paste0(base_url,"/data/experiments/",experiment_ID,"/scans/")
+      if(is.null(scan_type)) {
+        url_address <- paste0(url_address,"ALL")
+      }
+      else {
+        url_address <- paste0(url_address,scan_type)
+      }
+      url_address <- paste0(url_address,"/files?format=zip")
+      destfile = file.path(tempdir(),paste0(experiment_ID,".zip"))
+      message(url_address)
+      message(destfile)
+      args = list(
+        url = url_address,
+        write_disk(path = destfile,
+                   overwrite = TRUE),
+        set_cookies(JSESSIONID = jsid),
+        timeout(200)
+      )
+      if (verbose) {
+        args = c(args, list(progress()))
+      }
+      ret <- do.call("GET", args)
+      
+      if (error) {
+        stop_for_status(ret)
+      }
+      if(ret$status_code == "200") {
+        return(destfile)
+      }
+      else {
+        message("No resources found")
+        return(NULL)
+      }
+    } 
+    else {
+      # to be added next
+    }
+  }
+  
   reader <- basicTextGatherer()
   header <- basicTextGatherer()
 
   if(is.null(username) && !is.null(xnat_name)) {
-    env_username = Sys.getenv(paste0(xnat_name,"_XNATR_USER"), unset=NA)
+    env_username = Sys.getenv(paste0(toupper(xnat_name),"_XNATR_USER"), unset=NA)
     if(!is.na(env_username)){
       username = env_username
     }
   }
   else if(!is.null(xnat_name)){
     args = list(username)
-    names(args) = paste0(xnat_name,"_XNATR_USER")
+    names(args) = paste0(toupper(xnat_name),"_XNATR_USER")
     do.call(Sys.setenv, args)
   }
 
   if(is.null(password) && !is.null(xnat_name)) {
-    env_password = Sys.getenv(paste0(xnat_name,"_XNATR_PASS"), unset=NA)
+    env_password = Sys.getenv(paste0(toupper(xnat_name),"_XNATR_PASS"), unset=NA)
     if(!is.na(env_password)) {
       password = env_password
     }
@@ -611,13 +656,19 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
             xnat_name = xnat_name,
             get_xnat_experiment_resources = get_xnat_experiment_resources,
             download_file = download_file,
+            download_dir = download_dir,
             scans = scans)
 
-  class(rv) <- 'XNATConnection'
+  class(rv) <- 'XNATRConnection'
 
   return(rv)
 }
 
+
+#' @title Convert string to csv
+#' @description Convert a string to csv format
+#' @param string input string
+#' @importFrom utils read.csv
 string2csv <- function(string) {
   c <- textConnection(string)
   csv <- read.csv(c, as.is = TRUE)
@@ -627,8 +678,9 @@ string2csv <- function(string) {
 }
 
 #' @title Get scan resources for a specific experiment ID
+#' @description Get a full list of available resources for a specific experiment ID
 #' @param conn The XNAT connection returned by a \code{xnat_connect} call
-#' @param experiment_ID the experiment ID identifier, unique for each individual subject
+#' @param ... experiment_ID the experiment ID identifier, unique for each individual subject
 #' @examples
 #' ## Connect to XNAT CENTRAL
 #' xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")
@@ -641,26 +693,64 @@ get_scan_resources = function(conn, ...){
 #' @title Download XNAT file
 #' @description Download a single file from XNAT
 #' @param conn The XNAT connection returned by a \code{xnat_connect} call
-#' @param file_path Path to the file to be dowloaded
-#' @param destfile Destination filename
-#' @param prefix Prefix the file name with this (prevents
-#' overwritting of same name files in case function is
-#' used to download multiple scan types at once)
-#' @param verbose Should progress be added to download?
-#' @param error Should function error if download failed?
+#' @param ... file_path Path to the file to be dowloaded
+#'  destfile Destination filename
+#'  prefix Prefix the file name with this (prevents
+#'  overwritting of same name files in case function is
+#'  used to download multiple scan types at once)
+#'  verbose Should progress be added to download?
+#'  error Should function error if download failed?
 #'
 #' @return Display path to the downloaded file
 #' @importFrom httr stop_for_status write_disk progress GET
 #' @examples
 #' ## file_path is retrieved using the get_scan_resources() function
-#' xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")
-#' r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')
-#' \dontrun{download_nitrc_file(xnat_connect,r$URI[1])}
+#' \dontrun{xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")}
+#' \dontrun{r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')}
+#' \dontrun{download_file(xnat_connect,r$URI[1])}
 #' @export
 download_xnat_file = function(conn, ...){
   conn$download_file(...)
 }
 
+
+#' @title Download XNAT directory
+#' @description Download a full directory of data
+#' @param conn The XNAT connection returned by a \code{xnat_connect} call
+#' @param ... experiment_ID the experiment Id for which we need to download data
+#'   scan_type type of image scan
+#'   zipped zip the downloaded result
+#'   verbose Should progress be added to download?
+#'   error Should function error if download failed?
+#' 
+#' @return Display path to the downloaded file
+#' @importFrom httr stop_for_status write_disk progress GET
+#' @examples
+#' \dontrun{download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w', verbose=TRUE)}
+#' @export
+download_xnat_dir = function(conn, ...){
+  conn$download_dir(...)
+}
+
+#' @title Query all XNAT scan resources
+#' @description Query all scan resources to match
+#' specific query parameters and return a list of all
+#' mathching rows
+#' @param conn The XNAT connection returned by a \code{xnat_connect} call
+#' @param ... Select query parameters: subject_ID, project, age, experiment_ID, type
+#'   TR, TE, TI, flip, voxel_res, voxel_res_X, voxel_res_Y, voxel_res_Z,
+#'   orientation 
+#' 
+#' @return A data.frame containing all matching rows. XNAT does not do 
+#' sql join joins so only one row is returned per match. However each of the 
+#' experiment_IDs returned will have at least one row matching the user
+#' query (even if the displayed results show something else). This function
+#' should be used just to retrieve matching experiment IDs for downloading
+#' the queried data.
+#' @examples 
+#' \dontrun{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
+#' \dontrun{query_scan_resources(hcp,age='26', project='HCP_500')}
+#' @export
 query_scan_resources = function(conn, ...){
   conn$scans(...)
 }

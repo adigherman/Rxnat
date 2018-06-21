@@ -9,17 +9,13 @@ download_xnat_file(conn, ...)
 \arguments{
 \item{conn}{The XNAT connection returned by a \code{xnat_connect} call}
 
-\item{file_path}{Path to the file to be dowloaded}
-
-\item{destfile}{Destination filename}
-
-\item{prefix}{Prefix the file name with this (prevents
+\item{...}{file_path Path to the file to be dowloaded
+destfile Destination filename
+prefix Prefix the file name with this (prevents
 overwritting of same name files in case function is
-used to download multiple scan types at once)}
-
-\item{verbose}{Should progress be added to download?}
-
-\item{error}{Should function error if download failed?}
+used to download multiple scan types at once)
+verbose Should progress be added to download?
+error Should function error if download failed?}
 }
 \value{
 Display path to the downloaded file
@@ -29,7 +25,7 @@ Download a single file from XNAT
 }
 \examples{
 ## file_path is retrieved using the get_scan_resources() function
-xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")
-r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')
-\dontrun{download_nitrc_file(xnat_connect,r$URI[1])}
+\dontrun{xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")}
+\dontrun{r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')}
+\dontrun{download_file(xnat_connect,r$URI[1])}
 }

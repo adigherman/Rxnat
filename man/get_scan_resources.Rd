@@ -9,7 +9,10 @@ get_scan_resources(conn, ...)
 \arguments{
 \item{conn}{The XNAT connection returned by a \code{xnat_connect} call}
 
-\item{experiment_ID}{the experiment ID identifier, unique for each individual subject}
+\item{...}{experiment_ID the experiment ID identifier, unique for each individual subject}
+}
+\description{
+Get a full list of available resources for a specific experiment ID
 }
 \examples{
 ## Connect to XNAT CENTRAL
