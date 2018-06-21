@@ -517,26 +517,26 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   header <- basicTextGatherer()
 
   if(is.null(username) && !is.null(xnat_name)) {
-    env_username = Sys.getenv(paste0(xnat_name,"_XNAT_USER"), unset=NA)
+    env_username = Sys.getenv(paste0(xnat_name,"_XNATR_USER"), unset=NA)
     if(!is.na(env_username)){
       username = env_username
     }
   }
   else if(!is.null(xnat_name)){
     args = list(username)
-    names(args) = paste0(xnat_name,"_XNAT_USER")
+    names(args) = paste0(xnat_name,"_XNATR_USER")
     do.call(Sys.setenv, args)
   }
 
   if(is.null(password) && !is.null(xnat_name)) {
-    env_password = Sys.getenv(paste0(xnat_name,"_XNAT_PASS"), unset=NA)
+    env_password = Sys.getenv(paste0(xnat_name,"_XNATR_PASS"), unset=NA)
     if(!is.na(env_password)) {
       password = env_password
     }
   }
   else if(!is.null(xnat_name)){
     args = list(password)
-    names(args) = paste0(xnat_name,"_XNAT_PASS")
+    names(args) = paste0(xnat_name,"_XNATR_PASS")
     do.call(Sys.setenv, args)
   }
 
