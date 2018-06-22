@@ -1,4 +1,4 @@
-# xnatR: Query and retrieves neuroimaging sets from XNAT projects
+# Rxnat: Query and retrieves neuroimaging sets from XNAT projects
 
 ## What is XNAT?
 XNAT is an open source imaging informatics platform developed by the Neuroinformatics Research Group at Washington University. XNAT was originally developed in the Buckner Lab at Washington University, now at Harvard University. It facilitates common management, productivity, and quality assurance tasks for imaging and associated data. Thanks to its extensibility, XNAT can be used to support a wide range of imaging-based projects.
@@ -12,12 +12,12 @@ There are several projects that currently use XNAT to manage a vast number of da
 
 For a more complete list of XNAT implementations around the world you can click [here](https://www.xnat.org/about/xnat-implementations.php).
 
-## Installing the xnatR package
+## Installing the Rxnat package
 
-You can install `xnatR` from github with:
+You can install `Rxnat` from github with:
 ``` {r}
 # install.packages("devtools")
-devtools::install_github("adigherman/xnatR")
+devtools::install_github("adigherman/Rxnat")
 ```
 
 ## Accessing XNAT Data
@@ -29,8 +29,8 @@ XNAT projects can be public or private. In order to access a private repository 
 * NITRC - [new account request](https://www.nitrc.org/account/register.php). Some of the NITRC hosted projects will require additional access reuquests but this can be easily requested using the NITRC web interface for each project.
 * XNAT Central - this is mostly public, but you can also perform a [new account request](https://central.xnat.org/app/template/Register.vm) if any of the projects require it. 
 
-### Establishing a XNAT connection with the `xnatR` package
-The `xnatR` package will accept credentials provided in the function call or read from the system environment.
+### Establishing a XNAT connection with the `Rxnat` package
+The `Rxnat` package will accept credentials provided in the function call or read from the system environment.
 
 #### Function parameters
 To establish a connection using the credentials as function parameters we can call the `xnat_connect` function:
@@ -40,9 +40,9 @@ nitrc <- xnat_connect('https://nitrc.org/ir', username='XXXX', password='YYYY', 
 
 #### Setting up system environment variables
 To use system environment variables we need to add them to the `.Renviron` file located in the user's home folder. Use `Sys.getenv("HOME")` to get the path (for unix/osx users the location can be easily accessed with ~, eg. `vi ~/.Renviron`).
-The `xnatR` package will be able to automatically read / use a system environment variable provided the following format is used: `XXXX_XNATR_USER` and `XXXX_XNATR_PASS`. `XXXX` is provided as an argument when an XNAT connection is initiated. 
+The `Rxnat` package will be able to automatically read / use a system environment variable provided the following format is used: `XXXX_Rxnat_USER` and `XXXX_Rxnat_PASS`. `XXXX` is provided as an argument when an XNAT connection is initiated. 
 
-As an example `NITRC` is used as argument and the system environment variables names should be `NITRC_XNATR_USER`, and `NITRC_XNATR_PASS`.
+As an example `NITRC` is used as argument and the system environment variables names should be `NITRC_Rxnat_USER`, and `NITRC_Rxnat_PASS`.
 ``` {r}
 nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')
 ```
