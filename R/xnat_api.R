@@ -1,3 +1,5 @@
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("jsid"))
+
 subject_search_xml <- '<?xml version="1.0" encoding="UTF-8"?>
 <xdat:search allow-diff-columns="0" secure="false"
 xmlns:xdat="http://nrg.wustl.edu/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -282,7 +284,7 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
 #'
 #' @return \code{projects}
 #' @importFrom RCurl basicTextGatherer curlPerform parseHTTPHeader
-#' @importFrom httr set_cookies
+#' @importFrom httr set_cookies timeout
 #' @export
 xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
 {
@@ -309,8 +311,10 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   }
 
   close <- function() {
-    data <- xnat_call('/data/JSESSION', customrequest = 'DELETE')
-    jsid <- NULL
+    if(!is.null(jsid)) {
+      data <- xnat_call('/data/JSESSION', customrequest = 'DELETE')
+      jsid <<- NULL
+    }
   }
 
   projects <- function() {
@@ -364,8 +368,9 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                       'race',
                       'ethnicity',
                       'quarantine_status')
-      csv <- subset(csv, select = -c(subjectid, quarantine_status))
-      csv <- csv[with(csv, order(project, label)),]
+      csv["subjectid"] <- NULL
+      csv["quarantine_status"] <- NULL
+      csv <- csv[with(csv, order(csv[,1], csv[,3])),]
       rownames(csv) <- 1:nrow(csv)
       .subjects <<- csv
     }
@@ -408,15 +413,15 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
         csv <- string2csv(out_data)
         if(nrow(csv) > 0) {
           if(type == 'xnat:mrSessionData') {
-            csv <- subset(csv, select = c(subject_id,
-                                          session_id,
-                                          label,
-                                          age))
+            csv <- subset(csv, select = c('subject_id',
+                                          'session_id',
+                                          'label',
+                                          'age'))
           } else {
-            csv <- subset(csv, select = c(subject_id,
-                                          expt_id,
-                                          label,
-                                          age))
+            csv <- subset(csv, select = c('subject_id',
+                                          'expt_id',
+                                          'label',
+                                          'age'))
           }
           names(csv) <- c('subject_id', 'ID', 'label', 'age')
           csv$type <- rep(type, nrow(csv))
@@ -427,18 +432,18 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       .experiments <<- data.frame()
     }
     else {
-      ss <- subset(subjects(), select = c(ID, label, project))
+      ss <- subset(subjects(), select = c('ID', 'label', 'project'))
 
       experiments <- merge(experiments,
                            ss,
                            by.x = 'subject_id',
                            by.y = 'ID')
-      experiments <- subset(experiments, select = c(project,
-                                                    label.y,
-                                                    ID,
-                                                    type,
-                                                    label.x,
-                                                    age))
+      experiments <- subset(experiments, select = c('project',
+                                                    'label.y',
+                                                    'ID',
+                                                    'type',
+                                                    'label.x',
+                                                    'age'))
       names(experiments) <- c('project',
                               'subject',
                               'ID',
@@ -446,7 +451,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                               'label',
                               'age')
       experiments <- experiments[with(experiments,
-                                      order(project,subject,label)),]
+                                      order(experiments[,1],experiments[,2],experiments[,5])),]
       rownames(experiments) <- 1:nrow(experiments)
       .experiments <<- experiments
     }
@@ -600,25 +605,6 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       stop('error starting session')
     }
   } else {
-    if(is.null(password)) {
-      if(!have_tcltk) {
-        stop("can't prompt for password without tcltk")
-      }
-      tt <- tktoplevel()
-      tktitle(tt) <- 'XNAT Password'
-      onOK <- function() {
-        tkgrab.release(tt)
-        tkdestroy(tt)
-      }
-      lab <- tklabel(tt, text='Password:')
-      pwVar <- tclVar()
-      pw <- tkentry(tt, textvariable=pwVar, show='*')
-      but <- tkbutton(tt, text='OK', command=onOK)
-      tkgrid(lab, pw, but)
-      tkfocus(tt)
-      tkwait.window(tt)
-      password <- tclvalue(pwVar)
-    }
 
     curlPerform(url = paste(base_url, '/data/JSESSION', sep = ''),
                 writefunction = reader$update,
@@ -726,7 +712,7 @@ download_xnat_file = function(conn, ...){
 #' @return Display path to the downloaded file
 #' @importFrom httr stop_for_status write_disk progress GET
 #' @examples
-#' \dontrun{download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w', verbose=TRUE)}
+#' \dontrun{download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w')}
 #' @export
 download_xnat_dir = function(conn, ...){
   conn$download_dir(...)

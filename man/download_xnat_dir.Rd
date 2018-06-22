@@ -22,5 +22,5 @@ Display path to the downloaded file
 Download a full directory of data
 }
 \examples{
-\dontrun{download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w', verbose=TRUE)}
+\dontrun{download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w')}
 }
