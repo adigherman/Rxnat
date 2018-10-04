@@ -5,7 +5,8 @@
 \alias{xnat_connect}
 \title{Make a connection to an XNAT server}
 \usage{
-xnat_connect(base_url, username = NULL, password = NULL, xnat_name = NULL)
+xnat_connect(base_url, username = NULL, password = NULL,
+  xnat_name = NULL)
 }
 \arguments{
 \item{base_url}{the URL for the XNAT server}
