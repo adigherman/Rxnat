@@ -313,7 +313,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   close <- function() {
     if(!is.null(jsid)) {
       data <- xnat_call('/data/JSESSION', customrequest = 'DELETE')
-      jsid <- NULL
+      jsid <<- NULL
     }
   }
 
@@ -595,7 +595,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                 writefunction = reader$update,
                 headerfunction = header$update,
                 ssl.verifypeer = FALSE)
-    jsid <- NULL
+    jsid <<- NULL
     for(h in strsplit(header$value(), '\n')[[1]]) {
       if(substring(h, 1, 23) == 'Set-Cookie: JSESSIONID=') {
         jsid <<- strsplit(substring(h, 24), ';')[[1]][[1]]
@@ -618,7 +618,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     } else if(status != 200) {
       stop('error authenticating')
     }
-    jsid <- reader$value()
+    jsid <<- reader$value()
   }
 
   is.connected <- function() {
