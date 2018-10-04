@@ -1,3 +1,5 @@
+[![Travis-CI Build Status](https://travis-ci.org/adigherman/Rxnat.svg?branch=master)](https://travis-ci.org/adigherman/Rxnat)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/lnfie5vmqoipp920?svg=true)](https://ci.appveyor.com/project/adigherman/rxnat)
 # Rxnat: Query and retrieves neuroimaging sets from XNAT projects
 
 ## What is XNAT?
