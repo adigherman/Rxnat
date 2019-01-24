@@ -74,7 +74,6 @@ xmlns:xdat="http://nrg.wustl.edu/security" xmlns:xsi="http://www.w3.org/2001/XML
 
 get_experiment_search_xml <- function(type)
 {
-
   xml <- sprintf('<?xml version="1.0" encoding="UTF-8"?>
                  <xdat:search ID="" allow-diff-columns="0" secure="false" brief-description="MR Sessions"
                  xmlns:xdat="http://nrg.wustl.edu/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -313,7 +312,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   close <- function() {
     if(!is.null(jsid)) {
       data <- xnat_call('/data/JSESSION', customrequest = 'DELETE')
-      jsid <<- NULL
+      jsid <- NULL
     }
   }
 
@@ -618,7 +617,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     } else if(status != 200) {
       stop('error authenticating')
     }
-    jsid <<- reader$value()
+    jsid <- reader$value()
   }
 
   is.connected <- function() {
@@ -634,6 +633,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   .xnat_name <- xnat_name
 
   rv = list(base_url = base_url,
+            jsid = jsid,
             close = close,
             is.connected = is.connected,
             projects = projects,
