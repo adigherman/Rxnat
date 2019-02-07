@@ -475,8 +475,12 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   }
 
   get_xnat_experiment_resources <- function(experiment_ID) {
-    data <- xnat_call(paste0('/data/experiments/',experiment_ID,'/scans/ALL/files?format=csv'))
+    data <- xnat_call(paste0('/data/experiments/',experiment_ID,'/files?format=csv'))
     csv <- string2csv(data)
+    if(nrow(csv) == 0) {
+      data <- xnat_call(paste0('/data/experiments/',experiment_ID,'/scans/ALL/files?format=csv'))
+      csv <- string2csv(data)
+    }
 
     return(csv)
   }
