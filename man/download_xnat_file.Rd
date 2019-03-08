@@ -9,10 +9,10 @@ download_xnat_file(conn, ...)
 \arguments{
 \item{conn}{The XNAT connection returned by a \code{xnat_connect} call}
 
-\item{...}{file_path Path to the file to be dowloaded
+\item{...}{file_path Path to the file to be downloaded
 destfile Destination filename
 prefix Prefix the file name with this (prevents
-overwritting of same name files in case function is
+overwriting of same name files in case function is
 used to download multiple scan types at once)
 verbose Should progress be added to download?
 error Should function error if download failed?}

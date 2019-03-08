@@ -262,7 +262,7 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
 
 #' @title Make a connection to an XNAT server
 #' @description Make the XNAT connection and provides
-#' functions to retrive the list of projects, experiments
+#' functions to retrieve the list of projects, experiments
 #' and subjects.
 #' @name xnat_connection
 #' @param base_url the URL for the XNAT server
@@ -683,10 +683,10 @@ get_scan_resources = function(conn, ...){
 #' @title Download XNAT file
 #' @description Download a single file from XNAT
 #' @param conn The XNAT connection returned by a \code{xnat_connect} call
-#' @param ... file_path Path to the file to be dowloaded
+#' @param ... file_path Path to the file to be downloaded
 #'  destfile Destination filename
 #'  prefix Prefix the file name with this (prevents
-#'  overwritting of same name files in case function is
+#'  overwriting of same name files in case function is
 #'  used to download multiple scan types at once)
 #'  verbose Should progress be added to download?
 #'  error Should function error if download failed?
@@ -725,7 +725,7 @@ download_xnat_dir = function(conn, ...){
 #' @title Query all XNAT scan resources
 #' @description Query all scan resources to match
 #' specific query parameters and return a list of all
-#' mathching rows
+#' matching rows
 #' @param conn The XNAT connection returned by a \code{xnat_connect} call
 #' @param ... Select query parameters: subject_ID, project, age, experiment_ID, type
 #'   TR, TE, TI, flip, voxel_res, voxel_res_X, voxel_res_Y, voxel_res_Z,

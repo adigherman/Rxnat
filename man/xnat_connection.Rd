@@ -27,7 +27,7 @@ system variables for a specific XNAT server}
 }
 \description{
 Make the XNAT connection and provides
-functions to retrive the list of projects, experiments
+functions to retrieve the list of projects, experiments
 and subjects.
 }
 \examples{

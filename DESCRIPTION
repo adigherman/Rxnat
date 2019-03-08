@@ -1,13 +1,20 @@
 Package: Rxnat
-Version: 0.0.0.9006
-Title: Query/retrieve Images from XNAT Public/Private Datasets
-Description: This package will allow a user to query and extract subsets of images
- from a private/public XNAT dataset.
+Type: Package
+Version: 1.0.0
+Title: Query/Retrieve Images from 'Extensible Neuroimaging Archive Toolkit' Public/Private Datasets
+Description: Query and extract subsets of images
+ from a private/public 'Extensible Neuroimaging Archive Toolkit' <https://www.xnat.org> dataset.
 Authors@R: person("Adi", "Gherman", ,"adig@jhu.edu", c("aut", "cre"))
 Maintainer: Adi Gherman <adig@jhu.edu>
 Imports: RCurl, httr, utils, tcltk
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr
+BugReports: https://github.com/adigherman/Rxnat/issues

@@ -24,7 +24,7 @@ the queried data.
 \description{
 Query all scan resources to match
 specific query parameters and return a list of all
-mathching rows
+matching rows
 }
 \examples{
 \dontrun{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
