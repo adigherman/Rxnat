@@ -10,7 +10,8 @@ Imports: RCurl, httr, utils, tcltk
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

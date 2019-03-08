@@ -3,3 +3,23 @@
 language: R
 sudo: false
 cache: packages
+warnings_are_errors: true
+use_bioc: true
+bioc_required: true
+cran: http://cran.rstudio.com
+dist: trusty
+
+os:
+  - linux
+  - osx
+  
+osx_image: xcode9
+r:
+  - release
+  - devel
+matrix:
+  allow_failures:
+  - r: devel
+
+after_success:
+    - Rscript -e 'covr::coveralls()'
