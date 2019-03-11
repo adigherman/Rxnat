@@ -223,15 +223,6 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
         <xdat:header>Orientation</xdat:header>
       </xdat:search_field>
       '
-   # if(!is.null(subject_ID)) {
-  #    scan_search_xml <- paste0(scan_search_xml,'<xdat:search_where method="AND">
-   #     <xdat:criteria override_value_formatting="0">
-    #      <xdat:schema_field>xnat:mrSessionData.SUBJECT_ID</xdat:schema_field>
-    #      <xdat:comparison_type>=</xdat:comparison_type>
-    #      <xdat:value>',subject_ID,'</xdat:value>
-    #      </xdat:criteria>
-    #    </xdat:search_where>')
-    #}
 
     query_xml <- NULL
 
@@ -486,16 +477,20 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   }
 
   download_file <- function(file_path,
+                            file_dir = NULL,
                             destfile = NULL,
                             prefix = NULL,
                             verbose = FALSE,
                             error = FALSE
                             ) {
+    if(is.null(file_dir)) {
+      file_dir <- tempdir()
+    }
     if (is.null(destfile)) {
       if(!is.null(prefix)) {
         prefix <- paste0(prefix,"_")
       }
-      destfile = file.path(tempdir(),paste0(prefix,basename(file_path)))
+      destfile = file.path(file_dir,paste0(prefix,basename(file_path)))
     }
     args = list(
       url = paste0(base_url,file_path),
@@ -521,11 +516,14 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   }
 
   download_dir <- function(experiment_ID,
+                           file_dir = NULL,
                            scan_type = NULL,
                            zipped = TRUE,
                            verbose = FALSE,
                            error = FALSE){
-
+    if(is.null(file_dir)) {
+      file_dir <- tempdir()
+    }
     if(zipped) {
       url_address <- paste0(base_url,"/data/experiments/",experiment_ID,"/scans/")
       if(is.null(scan_type)) {
@@ -535,7 +533,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
         url_address <- paste0(url_address,scan_type)
       }
       url_address <- paste0(url_address,"/files?format=zip")
-      destfile = file.path(tempdir(),paste0(experiment_ID,".zip"))
+      destfile = file.path(file_dir,paste0(experiment_ID,".zip"))
       message(url_address)
       message(destfile)
       args = list(
@@ -659,6 +657,10 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
 #' @description Convert a string to csv format
 #' @param string input string
 #' @importFrom utils read.csv
+#' @examples{
+#' \dontrun{string2csv("col1,col2,col3\ncell_1_1,cell_1_2,cell_1_3\ncell_2_1,cell_2_2,cell_2_3")}
+#' \dontrun{string2csv("c1,c2,c3\n1,2,3")}
+#' } 
 string2csv <- function(string) {
   c <- textConnection(string)
   csv <- read.csv(c, as.is = TRUE)

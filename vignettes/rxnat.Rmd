@@ -143,7 +143,7 @@ scan_resources[1,c("Name","URI")]
 To download the resource file (100307_3T_BIAS_BC.nii.gz) we will do:
 
 ``` {r, eval = FALSE}
-> download_xnat_file(nitrc,"/data/experiments/xnat_E00026/scans/anat_mprage_anonymized/resources/3967/files/scan_mprage_anonymized.nii.gz")
+> download_xnat_file(nitrc,"/data/experiments/xnat_E00026/scans/anat_mprage_anonymized/resources/3967/files/scan_mprage_anonymized.nii.gz", file_dir = tempdir())
 [1] "/var/folders/kr/05bm5krj0r3fpwxfdmx4xthm0000gn/T//RtmpTNSN5E/scan_mprage_anonymized.nii.gz"
 ```
 
@@ -151,7 +151,7 @@ To download the resource file (100307_3T_BIAS_BC.nii.gz) we will do:
 To download all the T1 type images from experiment ConnectomeDB_E03657 we will use the `download_xnat_dir` function.
 
 ``` {r, eval = FALSE}
-download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', verbose=TRUE)
+download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir(), verbose=TRUE)
 /var/folders/kr/05bm5krj0r3fpwxfdmx4xthm0000gn/T//RtmpTNSN5E/NITRC_IR_E10507.zip
 Downloading: 5.2 MB     [1] "/var/folders/kr/05bm5krj0r3fpwxfdmx4xthm0000gn/T//RtmpTNSN5E/NITRC_IR_E10507.zip"
 ```

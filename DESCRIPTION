@@ -1,12 +1,12 @@
 Package: Rxnat
 Type: Package
-Version: 1.0.0
-Title: Query/Retrieve Images from 'Extensible Neuroimaging Archive Toolkit' Public/Private Datasets
-Description: Query and extract subsets of images
- from a private/public 'Extensible Neuroimaging Archive Toolkit' <https://www.xnat.org> dataset.
+Version: 1.0.1
+Title: Queries and Extracts Images from Extensible Neuroimaging Archive Toolkit Public/Private Datasets
+Description: An R package that allows communication with Extensible Neuroimaging Archive Toolkit <https://www.xnat.org>. 
+  Rxnat is using the XNAT REST API to perform data queries and download images.
 Authors@R: person("Adi", "Gherman", ,"adig@jhu.edu", c("aut", "cre"))
 Maintainer: Adi Gherman <adig@jhu.edu>
-Imports: RCurl, httr, utils, tcltk
+Imports: RCurl, httr, utils
 Suggests: 
     testthat,
     knitr,
