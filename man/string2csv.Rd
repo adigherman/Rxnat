@@ -14,7 +14,7 @@ Convert a string to csv format
 }
 \examples{
 {
-\dontrun{string2csv("col1,col2,col3\\ncell_1_1,cell_1_2,cell_1_3\\ncell_2_1,cell_2_2,cell_2_3")}
-\dontrun{string2csv("c1,c2,c3\\n1,2,3")}
+string2csv("col1,col2,col3\\ncell_1_1,cell_1_2,cell_1_3\\ncell_2_1,cell_2_2,cell_2_3")
+string2csv("c1,c2,c3\\n1,2,3")
 } 
 }

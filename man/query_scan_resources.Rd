@@ -27,6 +27,6 @@ specific query parameters and return a list of all
 matching rows
 }
 \examples{
-\dontrun{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
-\dontrun{query_scan_resources(hcp,age='26', project='HCP_500')}
+\donttest{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
+\donttest{query_scan_resources(hcp,age='26', project='HCP_500')}
 }
