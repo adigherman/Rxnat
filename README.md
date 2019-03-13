@@ -43,9 +43,9 @@ nitrc <- xnat_connect('https://nitrc.org/ir', username='XXXX', password='YYYY', 
 
 #### Setting up system environment variables
 To use system environment variables we need to add them to the `.Renviron` file located in the user's home folder. Use `Sys.getenv("HOME")` to get the path (for unix/osx users the location can be easily accessed with ~, eg. `vi ~/.Renviron`).
-The `Rxnat` package will be able to automatically read / use a system environment variable provided the following format is used: `XXXX_Rxnat_USER` and `XXXX_Rxnat_PASS`. `XXXX` is provided as an argument when an XNAT connection is initiated. 
+The `Rxnat` package will be able to automatically read / use a system environment variable provided the following format is used: `XXXX_RXNAT_USER` and `XXXX_RXNAT_PASS`. `XXXX` is provided as an argument when an XNAT connection is initiated. 
 
-As an example `NITRC` is used as argument and the system environment variables names should be `NITRC_Rxnat_USER`, and `NITRC_Rxnat_PASS`.
+As an example `NITRC` is used as argument and the system environment variables names should be `NITRC_RXNAT_USER`, and `NITRC_RXNAT_PASS`.
 ``` {r}
 nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')
 ```
