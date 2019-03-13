@@ -661,6 +661,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
 #' \dontrun{string2csv("col1,col2,col3\ncell_1_1,cell_1_2,cell_1_3\ncell_2_1,cell_2_2,cell_2_3")}
 #' \dontrun{string2csv("c1,c2,c3\n1,2,3")}
 #' } 
+#' @export
 string2csv <- function(string) {
   c <- textConnection(string)
   csv <- read.csv(c, as.is = TRUE)
@@ -697,9 +698,9 @@ get_scan_resources = function(conn, ...){
 #' @importFrom httr stop_for_status write_disk progress GET
 #' @examples
 #' ## file_path is retrieved using the get_scan_resources() function
-#' \dontrun{xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")}
-#' \dontrun{r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')}
-#' \dontrun{download_file(xnat_connect,r$URI[1])}
+#' \donttest{xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")}
+#' \donttest{r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')}
+#' \donttest{download_xnat_file(xnat_connect,r$URI[1])}
 #' @export
 download_xnat_file = function(conn, ...){
   conn$download_file(...)
@@ -718,7 +719,8 @@ download_xnat_file = function(conn, ...){
 #' @return Display path to the downloaded file
 #' @importFrom httr stop_for_status write_disk progress GET
 #' @examples
-#' \dontrun{download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w')}
+#' \donttest{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
+#' \donttest{download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w')}
 #' @export
 download_xnat_dir = function(conn, ...){
   conn$download_dir(...)
@@ -740,8 +742,8 @@ download_xnat_dir = function(conn, ...){
 #' should be used just to retrieve matching experiment IDs for downloading
 #' the queried data.
 #' @examples 
-#' \dontrun{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
-#' \dontrun{query_scan_resources(hcp,age='26', project='HCP_500')}
+#' \donttest{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
+#' \donttest{query_scan_resources(hcp,age='26', project='HCP_500')}
 #' @export
 query_scan_resources = function(conn, ...){
   conn$scans(...)
