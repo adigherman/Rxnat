@@ -27,5 +27,5 @@ Download a single file from XNAT
 ## file_path is retrieved using the get_scan_resources() function
 \donttest{xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")}
 \donttest{r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')}
-\donttest{download_xnat_file(xnat_connect,r$URI[1])}
+\donttest{download_xnat_file(xnat_central_conn,r$URI[1])}
 }

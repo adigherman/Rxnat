@@ -22,6 +22,6 @@ Display path to the downloaded file
 Download a full directory of data
 }
 \examples{
-\donttest{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
-\donttest{download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w')}
+\donttest{nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
+\donttest{download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir())}
 }

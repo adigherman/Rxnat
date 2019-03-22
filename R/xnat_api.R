@@ -700,7 +700,7 @@ get_scan_resources = function(conn, ...){
 #' ## file_path is retrieved using the get_scan_resources() function
 #' \donttest{xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")}
 #' \donttest{r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')}
-#' \donttest{download_xnat_file(xnat_connect_conn,r$URI[1])}
+#' \donttest{download_xnat_file(xnat_central_conn,r$URI[1])}
 #' @export
 download_xnat_file = function(conn, ...){
   conn$download_file(...)
@@ -719,8 +719,8 @@ download_xnat_file = function(conn, ...){
 #' @return Display path to the downloaded file
 #' @importFrom httr stop_for_status write_disk progress GET
 #' @examples
-#' \donttest{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
-#' \donttest{download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w')}
+#' \donttest{nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
+#' \donttest{download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir())}
 #' @export
 download_xnat_dir = function(conn, ...){
   conn$download_dir(...)
