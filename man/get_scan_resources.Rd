@@ -16,6 +16,8 @@ Get a full list of available resources for a specific experiment ID
 }
 \examples{
 ## Connect to XNAT CENTRAL
-xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")
+\dontrun{
+xnat_central_conn <- xnat_connect('https://central1.xnat.org', xnat_name="CENTRAL")
 get_scan_resources(xnat_central_conn,'CENTRAL_E00760')
+}
 }

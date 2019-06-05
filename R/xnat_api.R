@@ -273,7 +273,7 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
 #' \dontrun{xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")}
 #'
 #' @return \code{projects}
-#' @importFrom RCurl basicTextGatherer curlPerform parseHTTPHeader
+#' @importFrom RCurl basicTextGatherer curlPerform parseHTTPHeader url.exists
 #' @importFrom httr set_cookies timeout
 #' @export
 xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
@@ -282,23 +282,24 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     if(is.null(jsid)) {
       stop('not connected')
     }
-    reader <- basicTextGatherer()
-    header <- basicTextGatherer()
-    if(nchar(data) > 0) {
-      customrequest = 'POST'
+      reader <- basicTextGatherer()
+      header <- basicTextGatherer()
+      if(nchar(data) > 0) {
+        customrequest = 'POST'
+      }
+      curlPerform(url = paste(base_url, request, sep = ''),
+                  writefunction = reader$update,
+                  headerfunction = header$update,
+                  customrequest = customrequest,
+                  postfields = data,
+                  ssl.verifypeer = FALSE,
+                  cookie = paste('JSESSIONID=', jsid, sep = ''))
+      if(parseHTTPHeader(header$value())['status'] != 200) {
+        stop('error during HTTP request')
+      }
+      return(reader$value())
     }
-    curlPerform(url = paste(base_url, request, sep = ''),
-                writefunction = reader$update,
-                headerfunction = header$update,
-                customrequest = customrequest,
-                postfields = data,
-                ssl.verifypeer = FALSE,
-                cookie = paste('JSESSIONID=', jsid, sep = ''))
-    if(parseHTTPHeader(header$value())['status'] != 200) {
-      stop('error during HTTP request')
-    }
-    return(reader$value())
-  }
+
 
   close <- function() {
     if(!is.null(jsid)) {
@@ -676,8 +677,10 @@ string2csv <- function(string) {
 #' @param ... experiment_ID the experiment ID identifier, unique for each individual subject
 #' @examples
 #' ## Connect to XNAT CENTRAL
-#' xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")
+#' \dontrun{
+#' xnat_central_conn <- xnat_connect('https://central1.xnat.org', xnat_name="CENTRAL")
 #' get_scan_resources(xnat_central_conn,'CENTRAL_E00760')
+#' }
 #' @export
 get_scan_resources = function(conn, ...){
   conn$get_xnat_experiment_resources(...)
@@ -698,9 +701,11 @@ get_scan_resources = function(conn, ...){
 #' @importFrom httr stop_for_status write_disk progress GET
 #' @examples
 #' ## file_path is retrieved using the get_scan_resources() function
-#' \donttest{xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")}
-#' \donttest{r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')}
-#' \donttest{download_xnat_file(xnat_central_conn,r$URI[1])}
+#' \dontrun{
+#' xnat_central_conn <- xnat_connect('https://central.xnat.org', xnat_name="CENTRAL")
+#' r <- get_scan_resources(xnat_central_conn,'CENTRAL_E00760')
+#' download_xnat_file(xnat_central_conn,r$URI[1])
+#' }
 #' @export
 download_xnat_file = function(conn, ...){
   conn$download_file(...)
