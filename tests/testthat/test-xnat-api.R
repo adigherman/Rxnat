@@ -1,4 +1,5 @@
 test_that("xnat_api", {
+  skip_on_cran()
   testthat::expect_silent(nitrc <- xnat_connect('https://nitrc.org/ir'))
   testthat::expect_is(nitrc$jsid, "character")
   testthat::expect_true(nitrc$is.connected())
