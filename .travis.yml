@@ -23,7 +23,7 @@ matrix:
 
 after_success:
     - Rscript -e 'covr::coveralls()'
-    - Rscript -e 'install.packages("remotes")' -e 'remotes::install_githb("hadley/pkgdown")' -e 'pkgdown::build_site()'
+    - Rscript -e 'install.packages("remotes")' -e 'remotes::install_github("hadley/pkgdown")' -e 'pkgdown::build_site()'
     
 deploy:
   provider: pages
