@@ -295,7 +295,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                   ssl.verifypeer = FALSE,
                   cookie = paste('JSESSIONID=', jsid, sep = ''))
       if(parseHTTPHeader(header$value())['status'] != 200) {
-        stop('error during HTTP request')
+        message("No internet connection or data source broken.")
+        return(NULL)
       }
       return(reader$value())
     }
@@ -724,8 +725,8 @@ download_xnat_file = function(conn, ...){
 #' @return Display path to the downloaded file
 #' @importFrom httr stop_for_status write_disk progress GET
 #' @examples
-#' \donttest{nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
-#' \donttest{download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir())}
+#' \dontrun{nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
+#' \dontrun{download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir())}
 #' @export
 download_xnat_dir = function(conn, ...){
   conn$download_dir(...)
@@ -747,8 +748,8 @@ download_xnat_dir = function(conn, ...){
 #' should be used just to retrieve matching experiment IDs for downloading
 #' the queried data.
 #' @examples 
-#' \donttest{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
-#' \donttest{query_scan_resources(hcp,age='26', project='HCP_500')}
+#' \dontrun{hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")}
+#' \dontrun{query_scan_resources(hcp,age='26', project='HCP_500')}
 #' @export
 query_scan_resources = function(conn, ...){
   conn$scans(...)

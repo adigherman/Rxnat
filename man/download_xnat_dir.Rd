@@ -22,6 +22,6 @@ Display path to the downloaded file
 Download a full directory of data
 }
 \examples{
-\donttest{nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
-\donttest{download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir())}
+\dontrun{nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
+\dontrun{download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir())}
 }

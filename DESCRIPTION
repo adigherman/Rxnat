@@ -1,6 +1,6 @@
 Package: Rxnat
 Type: Package
-Version: 1.0.7
+Version: 1.0.8
 Title: Queries and Extracts Images from Extensible Neuroimaging Archive Toolkit Public/Private Datasets
 Description: Allows communication with Extensible Neuroimaging Archive Toolkit <https://www.xnat.org>. 
   'Rxnat' is using the 'XNAT' REST API to perform data queries and download images.
@@ -16,6 +16,6 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr
 BugReports: https://github.com/adigherman/Rxnat/issues
