@@ -6,7 +6,7 @@ Description: Allows communication with Extensible Neuroimaging Archive Toolkit <
   'Rxnat' is using the 'XNAT' REST API to perform data queries and download images.
 Authors@R: person("Adi", "Gherman", ,"adig@jhu.edu", c("aut", "cre"))
 Maintainer: Adi Gherman <adig@jhu.edu>
-Imports: RCurl, httr, utils
+Imports: RCurl, httr, utils, dplyr
 Suggests: 
     testthat,
     knitr,
