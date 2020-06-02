@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Rxnat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.9</span>
       </span>
     </div>
 
@@ -249,6 +249,10 @@ scan_resources[1,"Name"]
 <p>To download all the T2w type images from experiment ConnectomeDB_E03657 we will use the <code>download_xnat_dir</code> function.</p>
 <pre class="{r}"><code>download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w', verbose=TRUE)
 Downloading: 28 MB     [1] "/var/folders/wb/l7jtkdy14f761vm4xr9zxjj80000gn/T//RtmpFfYbQ7/ConnectomeDB_E03657.zip"</code></pre>
+<p>To retrieve just the nii.gz file we can use the <code>unzip</code> parameter.</p>
+<pre class="{r}"><code>T2w_file &lt;- download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w', unzip=TRUE)
+T2w_file 
+[1] "/var/folders/wb/l7jtkdy14f761vm4xr9zxjj80000gn/T//RtmpqNhtes/100307_3T/scans/104-T2w/resources/NIFTI/files/100307_3T_T2w_SPC1.nii.gz"</code></pre>
 </div>
 </div>
 

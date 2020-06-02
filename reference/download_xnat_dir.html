@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rxnat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.9</span>
       </span>
     </div>
 
@@ -144,7 +144,8 @@
 scan_type type of image scan
 zipped zip the downloaded result
 verbose Should progress be added to download?
-error Should function error if download failed?</p></td>
+error Should function error if download failed?
+unzip Unzip the result and return the file (based on scan_type)</p></td>
     </tr>
     </table>
 
@@ -157,7 +158,8 @@ error Should function error if download failed?</p></td>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>download_xnat_dir</span>(<span class='no'>nitrc</span>,
                            <span class='kw'>experiment_ID</span><span class='kw'>=</span><span class='st'>'NITRC_IR_E10507'</span>,
                            <span class='kw'>scan_type</span><span class='kw'>=</span><span class='st'>'T2'</span>,
-                           <span class='kw'>file_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())</div></pre>
+                           <span class='kw'>file_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
+                           <span class='kw'>unzip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
