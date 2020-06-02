@@ -154,7 +154,10 @@ error Should function error if download failed?</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='no'>nitrc</span> <span class='kw'>&lt;-</span> <span class='fu'>xnat_connect</span>(<span class='st'>'https://nitrc.org/ir'</span>, <span class='kw'>xnat_name</span><span class='kw'>=</span><span class='st'>'NITRC'</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>download_xnat_dir</span>(<span class='no'>nitrc</span>, <span class='kw'>experiment_ID</span><span class='kw'>=</span><span class='st'>'NITRC_IR_E10507'</span>,<span class='kw'>scan_type</span><span class='kw'>=</span><span class='st'>'T2'</span>, <span class='kw'>file_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())</div></pre>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>download_xnat_dir</span>(<span class='no'>nitrc</span>,
+                           <span class='kw'>experiment_ID</span><span class='kw'>=</span><span class='st'>'NITRC_IR_E10507'</span>,
+                           <span class='kw'>scan_type</span><span class='kw'>=</span><span class='st'>'T2'</span>,
+                           <span class='kw'>file_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
