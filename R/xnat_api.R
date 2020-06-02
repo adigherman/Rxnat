@@ -557,6 +557,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       if(ret$status_code == "200") {
         if(unzip)
         {
+          unzip(destfile, exdir=tempdir())
           unzipped_destfile <- unzip(destfile, list=TRUE) 
           zipfile <- file.path(tempdir(),unzipped_destfile[1,]$Name)
           return(zipfile)
