@@ -522,7 +522,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                            scan_type = NULL,
                            zipped = TRUE,
                            verbose = FALSE,
-                           error = FALSE){
+                           error = FALSE, 
+                           unzip = FALSE){
     if(is.null(file_dir)) {
       file_dir <- tempdir()
     }
@@ -554,6 +555,12 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
         stop_for_status(ret)
       }
       if(ret$status_code == "200") {
+        if(unzip)
+        {
+          unzipped_destfile <- unzip(destfile, list=TRUE) 
+          zipfile <- file.path(tempdir(),unzipped_destfile[1,]$Name)
+          return(zipfile)
+        }
         return(destfile)
       }
       else {
@@ -724,6 +731,7 @@ download_xnat_file = function(conn, ...){
 #'   zipped zip the downloaded result
 #'   verbose Should progress be added to download?
 #'   error Should function error if download failed?
+#'   unzip Unzip the result and return the file (based on scan_type)
 #' 
 #' @return Display path to the downloaded file
 #' @importFrom httr stop_for_status write_disk progress GET
@@ -732,7 +740,8 @@ download_xnat_file = function(conn, ...){
 #' \dontrun{download_xnat_dir(nitrc, 
 #'                            experiment_ID='NITRC_IR_E10507',
 #'                            scan_type='T2', 
-#'                            file_dir = tempdir())
+#'                            file_dir = tempdir(),
+#'                            unzip = TRUE)
 #' }
 #' @export
 download_xnat_dir = function(conn, ...){

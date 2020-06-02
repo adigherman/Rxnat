@@ -13,7 +13,8 @@ download_xnat_dir(conn, ...)
 scan_type type of image scan
 zipped zip the downloaded result
 verbose Should progress be added to download?
-error Should function error if download failed?}
+error Should function error if download failed?
+unzip Unzip the result and return the file (based on scan_type)}
 }
 \value{
 Display path to the downloaded file
@@ -26,6 +27,7 @@ Download a full directory of data
 \dontrun{download_xnat_dir(nitrc, 
                            experiment_ID='NITRC_IR_E10507',
                            scan_type='T2', 
-                           file_dir = tempdir())
+                           file_dir = tempdir(),
+                           unzip = TRUE)
 }
 }
