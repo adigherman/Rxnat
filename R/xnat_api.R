@@ -665,6 +665,9 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
 #' } 
 #' @export
 string2csv <- function(string) {
+  if(is.null(string) || nchar(string) == 0) {
+    return(NULL)
+  }
   c <- textConnection(string)
   csv <- read.csv(c, as.is = TRUE)
   close(c)
@@ -726,7 +729,11 @@ download_xnat_file = function(conn, ...){
 #' @importFrom httr stop_for_status write_disk progress GET
 #' @examples
 #' \dontrun{nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
-#' \dontrun{download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir())}
+#' \dontrun{download_xnat_dir(nitrc, 
+#'                            experiment_ID='NITRC_IR_E10507',
+#'                            scan_type='T2', 
+#'                            file_dir = tempdir())
+#' }
 #' @export
 download_xnat_dir = function(conn, ...){
   conn$download_dir(...)

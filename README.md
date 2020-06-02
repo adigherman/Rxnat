@@ -19,8 +19,8 @@ For a more complete list of XNAT implementations around the world you can click 
 
 You can install `Rxnat` from github with:
 ``` {r}
-# install.packages("devtools")
-devtools::install_github("adigherman/Rxnat")
+# install.packages("remotes")
+remotes::install_github("adigherman/Rxnat")
 ```
 
 ## Accessing XNAT Data
