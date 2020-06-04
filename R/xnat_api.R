@@ -736,6 +736,7 @@ download_xnat_file = function(conn, ...){
 #' 
 #' @return Display path to the downloaded file
 #' @importFrom httr stop_for_status write_disk progress GET
+#' @importFrom utils unzip
 #' @examples
 #' \dontrun{nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
 #' \dontrun{download_xnat_dir(nitrc, 
