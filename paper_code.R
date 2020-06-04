@@ -10,9 +10,9 @@ library(WhiteStripe)
 #neuro_install('Rxnat')
 
 # Establish XNAT connections
-#library(Rxnat)
-#nitrc <- xnat_connect("https://nitrc.org/ir", xnat_name="NITRC")
-#hcp <- xnat_connect("https://db.humanconnectome.org", xnat_name = "hcp")
+library(Rxnat)
+nitrc <- xnat_connect("https://nitrc.org/ir", xnat_name="NITRC")
+hcp <- xnat_connect("https://db.humanconnectome.org", xnat_name = "hcp")
 
 # Get list subjects from XNAT
 nitrc_subjects <- nitrc$subjects()
@@ -21,30 +21,35 @@ all_subjects <- bind_rows(nitrc_subjects, hcp_subjects)
 colnames(all_subjects)
 
 # Extract experiment data
-nitrc_T1_scan_resources <- query_scan_resources(nitrc,type="T1")
+nitrc_T1_scan_resources <- nitrc$scans(type="T1")
 nitrc_T1_scan_resources <- nitrc_T1_scan_resources %>%
-                              mutate(source = "nitrc", scantype = "T1")
-hcp_T1_scan_resources <- query_scan_resources(hcp,type="T1w")
+  mutate(source = "nitrc", scantype = "T1")
+hcp_T1_scan_resources <- hcp$scans(type="T1w")
 hcp_T1_scan_resources <- hcp_T1_scan_resources %>%
-                              mutate(source = "hcp", scantype = "T1")
+  mutate(source = "hcp", scantype = "T1")
 
 # Filter resources and select subjects between 26 and 40 years
 T1_resources <- bind_rows(nitrc_T1_scan_resources, hcp_T1_scan_resources)
 T1_resources <- left_join(
-                  T1_resources,
-                  all_subjects,
-                  by = c("subject_ID" = "ID")
-                )
+  T1_resources,
+  all_subjects,
+  by = c("subject_ID" = "ID")
+)
 age_26_to_40_group <- T1_resources %>%
-                      filter(Age>26) %>%
-                      filter(Age<40)
+  filter(Age>26) %>%
+  filter(Age<40)
 
 
 # Download the first subject T1 weighted image
-file_path <- nitrc$download_dir(experiment_ID = age_26_to_40_group$experiment_ID[8], scan_type = "T1", unzip = TRUE)
+file_path <- nitrc$download_dir(
+  experiment_ID = age_26_to_40_group$experiment_ID[8],
+  scan_type = "T1",
+  extract = TRUE
+)
+
 
 # Read T1 image
-t1 <- readrpi(file_path)
+t1 <- readrpi(file_path[1])
 ortho2(t1, add.orient = TRUE)
 
 # Remove neck and drop empty dimensions
@@ -58,8 +63,8 @@ red <- readrpi(red)
 
 # Inhomegeneity correction
 t1_n4 = bias_correct(red,
-                      correction = "N4",
-                      outfile = tempfile(fileext = ".nii.gz"), retimg = FALSE
+                     correction = "N4",
+                     outfile = tempfile(fileext = ".nii.gz"), retimg = FALSE
 )
 t1_n4 <- readrpi(t1_n4)
 
@@ -87,7 +92,7 @@ ws_t1 = whitestripe_norm(t1_ss, ind)
 
 # Perform segmentation
 ss_tcs = fslr::fast_nobias(ws_t1,
-                       verbose = TRUE)
+                           verbose = TRUE)
 
 # Generate Panel A
 ortho2(red,
@@ -98,7 +103,7 @@ ortho2(red,
        leg.col = "red",
        legend = "T1 Image Neck Removed",
        leg.x = 0
-       )
+)
 
 # Generate Panel B
 ortho2(red,
@@ -111,7 +116,7 @@ ortho2(red,
        leg.col = "red",
        legend = "T1 Image Brain Mask",
        leg.x = 0
-       )
+)
 
 # Generate Panel C
 double_ortho(ws_t1,
@@ -123,4 +128,4 @@ double_ortho(ws_t1,
              leg.col="red",
              legend="Segmentation results",
              leg.x=0
-             )
+)
