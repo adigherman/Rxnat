@@ -10,9 +10,9 @@ library(WhiteStripe)
 #neuro_install('Rxnat')
 
 # Establish XNAT connections
-library(Rxnat)
-nitrc <- xnat_connect("https://nitrc.org/ir", xnat_name="NITRC")
-hcp <- xnat_connect("https://db.humanconnectome.org", xnat_name = "hcp")
+#library(Rxnat)
+#nitrc <- xnat_connect("https://nitrc.org/ir", xnat_name="NITRC")
+#hcp <- xnat_connect("https://db.humanconnectome.org", xnat_name = "hcp")
 
 # Get list subjects from XNAT
 nitrc_subjects <- nitrc$subjects()
