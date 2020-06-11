@@ -6,8 +6,7 @@ library(scales)
 library(WhiteStripe)
 
 # Install the Rxnat from Neuroconductor
-#source("https://neuroconductor.org/neurocLite.R")
-#neuro_install('Rxnat')
+install.packages('Rxnat')
 
 # Establish XNAT connections
 library(Rxnat)
