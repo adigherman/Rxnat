@@ -5,8 +5,7 @@ library(malf.templates)
 library(scales)
 library(WhiteStripe)
 
-# Install the Rxnat from Neuroconductor
-install.packages('Rxnat')
+##install.packages('Rxnat')
 
 # Establish XNAT connections
 library(Rxnat)
@@ -106,7 +105,7 @@ ortho2(red,
 
 # Generate Panel B
 ortho2(red,
-       ss,
+       t1_ss,
        col.y=alpha("red", 0.3),
        add.orient = TRUE,
        addlegend = TRUE,
