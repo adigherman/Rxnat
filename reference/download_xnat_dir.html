@@ -97,6 +97,9 @@
     <li>
       <a href="../articles/rxnat.html">Using the Rxnat Package</a>
     </li>
+    <li>
+      <a href="../articles/use_case.html">Rxnat Paper Example</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -129,7 +132,7 @@
     <p>Download a full directory of data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>download_xnat_dir</span>(<span class='no'>conn</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>download_xnat_dir</span>(<span class='kw'>conn</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,12 +157,13 @@ extract Unzip the result and return the files list (based on scan_type)</p></td>
     <p>Display path to the downloaded file</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='no'>nitrc</span> <span class='kw'>&lt;-</span> <span class='fu'>xnat_connect</span>(<span class='st'>'https://nitrc.org/ir'</span>, <span class='kw'>xnat_name</span><span class='kw'>=</span><span class='st'>'NITRC'</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>download_xnat_dir</span>(<span class='no'>nitrc</span>,
-                           <span class='kw'>experiment_ID</span><span class='kw'>=</span><span class='st'>'NITRC_IR_E10507'</span>,
-                           <span class='kw'>scan_type</span><span class='kw'>=</span><span class='st'>'T2'</span>,
-                           <span class='kw'>file_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
-                           <span class='kw'>extract</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) <span class='kw'>nitrc</span> <span class='op'>&lt;-</span> <span class='fu'>xnat_connect</span>(<span class='st'>'https://nitrc.org/ir'</span>, xnat_name=<span class='st'>'NITRC'</span>)
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>download_xnat_dir</span>(<span class='kw'>nitrc</span>, 
+                           experiment_ID=<span class='st'>'NITRC_IR_E10507'</span>,
+                           scan_type=<span class='st'>'T2'</span>, 
+                           file_dir = <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
+                           extract = <span class='fl'>TRUE</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

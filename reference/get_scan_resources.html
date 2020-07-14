@@ -97,6 +97,9 @@
     <li>
       <a href="../articles/rxnat.html">Using the Rxnat Package</a>
     </li>
+    <li>
+      <a href="../articles/use_case.html">Rxnat Paper Example</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -129,7 +132,7 @@
     <p>Get a full list of available resources for a specific experiment ID</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_scan_resources</span>(<span class='no'>conn</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>get_scan_resources</span>(<span class='kw'>conn</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,9 +150,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Connect to XNAT CENTRAL</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>xnat_central_conn</span> <span class='kw'>&lt;-</span> <span class='fu'>xnat_connect</span>(<span class='st'>'https://central1.xnat.org'</span>, <span class='kw'>xnat_name</span><span class='kw'>=</span><span class='st'>"CENTRAL"</span>)
-<span class='fu'>get_scan_resources</span>(<span class='no'>xnat_central_conn</span>,<span class='st'>'CENTRAL_E00760'</span>)
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>xnat_central_conn</span> <span class='op'>&lt;-</span> <span class='fu'>xnat_connect</span>(<span class='st'>'https://central1.xnat.org'</span>, xnat_name=<span class='st'>"CENTRAL"</span>)
+<span class='fu'>get_scan_resources</span>(<span class='kw'>xnat_central_conn</span>,<span class='st'>'CENTRAL_E00760'</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

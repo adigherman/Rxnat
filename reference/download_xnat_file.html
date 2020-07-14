@@ -97,6 +97,9 @@
     <li>
       <a href="../articles/rxnat.html">Using the Rxnat Package</a>
     </li>
+    <li>
+      <a href="../articles/use_case.html">Rxnat Paper Example</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -129,7 +132,7 @@
     <p>Download a single file from XNAT</p>
     </div>
 
-    <pre class="usage"><span class='fu'>download_xnat_file</span>(<span class='no'>conn</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>download_xnat_file</span>(<span class='kw'>conn</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,10 +159,10 @@ error Should function error if download failed?</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## file_path is retrieved using the get_scan_resources() function</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>xnat_central_conn</span> <span class='kw'>&lt;-</span> <span class='fu'>xnat_connect</span>(<span class='st'>'https://central.xnat.org'</span>, <span class='kw'>xnat_name</span><span class='kw'>=</span><span class='st'>"CENTRAL"</span>)
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>get_scan_resources</span>(<span class='no'>xnat_central_conn</span>,<span class='st'>'CENTRAL_E00760'</span>)
-<span class='fu'>download_xnat_file</span>(<span class='no'>xnat_central_conn</span>,<span class='no'>r</span>$<span class='no'>URI</span>[<span class='fl'>1</span>])
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>xnat_central_conn</span> <span class='op'>&lt;-</span> <span class='fu'>xnat_connect</span>(<span class='st'>'https://central.xnat.org'</span>, xnat_name=<span class='st'>"CENTRAL"</span>)
+<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>get_scan_resources</span>(<span class='kw'>xnat_central_conn</span>,<span class='st'>'CENTRAL_E00760'</span>)
+<span class='fu'>download_xnat_file</span>(<span class='kw'>xnat_central_conn</span>,<span class='kw'>r</span><span class='op'>$</span><span class='kw'>URI</span>[<span class='fl'>1</span>])
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

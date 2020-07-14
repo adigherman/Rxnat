@@ -56,6 +56,9 @@
 <li>
       <a href="../articles/rxnat.html">Using the Rxnat Package</a>
     </li>
+    <li>
+      <a href="../articles/use_case.html">Rxnat Paper Example</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -82,7 +85,7 @@
       <h1 data-toc-skip>Using the Rxnat Package</h1>
                         <h4 class="author">Adi Gherman</h4>
             
-            <h4 class="date">2020-06-11</h4>
+            <h4 class="date">2020-07-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adigherman/Rxnat/blob/master/vignettes/rxnat.Rmd"><code>vignettes/rxnat.Rmd</code></a></small>
       <div class="hidden name"><code>rxnat.Rmd</code></div>
@@ -119,8 +122,10 @@ text-align: justify}
 <h2 class="hasAnchor">
 <a href="#installing-the-rxnat-package" class="anchor"></a>Installing the Rxnat package</h2>
 <p>You can install <code>Rxnat</code> from github with:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"adigherman/Rxnat"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># install.packages("devtools")</span>
+<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"adigherman/Rxnat"</span>)
+</pre></div>
 </div>
 <div id="accessing-xnat-data" class="section level2">
 <h2 class="hasAnchor">
@@ -143,16 +148,22 @@ text-align: justify}
 <h4 class="hasAnchor">
 <a href="#function-parameters" class="anchor"></a>Function parameters</h4>
 <p>To establish a connection using the credentials as function parameters we can call the <code>xnat_connect</code> function:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">nitrc</span> <span class="kw">&lt;-</span> <span class="fu">xnat_connect</span>(<span class="st">'https://nitrc.org/ir'</span>, <span class="kw">username</span><span class="kw">=</span><span class="st">'XXXX'</span>, <span class="kw">password</span><span class="kw">=</span><span class="st">'YYYY'</span>, <span class="kw">xnat_name</span><span class="kw">=</span><span class="kw">NULL</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">nitrc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xnat_connection.html">xnat_connect</a></span>(<span class="st">'https://nitrc.org/ir'</span>, username=<span class="st">'XXXX'</span>, password=<span class="st">'YYYY'</span>, xnat_name=<span class="kw">NULL</span>)
+</pre></div>
 </div>
 <div id="setting-up-system-environment-variables" class="section level4">
 <h4 class="hasAnchor">
 <a href="#setting-up-system-environment-variables" class="anchor"></a>Setting up system environment variables</h4>
 <p>To use system environment variables we need to add them to the <code>.Renviron</code> file located in the user’s home folder. Use <code><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv("HOME")</a></code> to get the path (for unix/osx users the location can be easily accessed with ~, eg. <code>vi ~/.Renviron</code>). The <code>Rxnat</code> package will be able to automatically read / use a system environment variable provided the following format is used: <code>XXXX_Rxnat_USER</code> and <code>XXXX_Rxnat_PASS</code>. <code>XXXX</code> is provided as an argument when an XNAT connection is initiated.</p>
 <p>As an example <code>NITRC</code> is used as argument and the system environment variables names should be <code>NITRC_Rxnat_USER</code>, and <code>NITRC_Rxnat_PASS</code>.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">nitrc</span> <span class="kw">&lt;-</span> <span class="fu">xnat_connect</span>(<span class="st">'https://nitrc.org/ir'</span>, <span class="kw">xnat_name</span><span class="kw">=</span><span class="st">'NITRC'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">nitrc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xnat_connection.html">xnat_connect</a></span>(<span class="st">'https://nitrc.org/ir'</span>, xnat_name=<span class="st">'NITRC'</span>)
+</pre></div>
 <p>NITRC has some public image repositories, a username and password are not required to connect/query them. To create a connection to the public NITRC resources we call the <code>xnat_connect</code> function.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">nitrc</span> <span class="kw">&lt;-</span> <span class="fu">xnat_connect</span>(<span class="st">'https://nitrc.org/ir'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw">nitrc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xnat_connection.html">xnat_connect</a></span>(<span class="st">'https://nitrc.org/ir'</span>)
+</pre></div>
 </div>
 </div>
 </div>
@@ -160,22 +171,25 @@ text-align: justify}
 <h2 class="hasAnchor">
 <a href="#get-list-of-available-xnat-projects" class="anchor"></a>Get list of available XNAT projects</h2>
 <p>Once a connection is established using the <code>xnat_connect</code> function a list of available projects can be easily retrieved by using the class internal function <code>projects</code>:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">nitrc_projects</span> <span class="kw">&lt;-</span> <span class="no">nitrc</span>$<span class="fu">projects</span>()
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">nitrc_projects</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'ID'</span>,<span class="st">'name'</span>)])
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">nitrc_projects</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">projects</span>()
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_projects</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'ID'</span>,<span class="st">'name'</span>)])
 <span class="co">#&gt;             ID                                                  name</span>
 <span class="co">#&gt; 1        ABIDE                                                 ABIDE</span>
 <span class="co">#&gt; 2     ABIDE_II                                              ABIDE_II</span>
 <span class="co">#&gt; 3     adhd_200                                              ADHD-200</span>
 <span class="co">#&gt; 4  beijing_enh                                      Beijing Enhanced</span>
 <span class="co">#&gt; 5 beijing_eoec                         Beijing Eyes Open Eyes Closed</span>
-<span class="co">#&gt; 6         corr Consortium for Reliability and Reproducibility (CoRR)</span></pre></body></html></div>
+<span class="co">#&gt; 6         corr Consortium for Reliability and Reproducibility (CoRR)</span>
+</pre></div>
 </div>
 <div id="retrieve-a-list-with-all-accessible-subjects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#retrieve-a-list-with-all-accessible-subjects" class="anchor"></a>Retrieve a list with all accessible subjects</h2>
 <p>A full list of subjects for each XNAT connection can be retrieved using the <code>subjects</code> function:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">nitrc_subjects</span> <span class="kw">&lt;-</span> <span class="no">nitrc</span>$<span class="fu">subjects</span>()
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">nitrc_subjects</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">nitrc_subjects</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">subjects</span>()
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_subjects</span>)
 <span class="co">#&gt;          project          ID        label gender handedness yob education ses</span>
 <span class="co">#&gt; 1 cs_schizbull08 xnat_S02601 BPDwoPsy_030      F          R  NA        NA  NA</span>
 <span class="co">#&gt; 2 cs_schizbull08 xnat_S02602 BPDwoPsy_031      F          R  NA        NA  NA</span>
@@ -189,14 +203,16 @@ text-align: justify}
 <span class="co">#&gt; 3 Bipolar Disorder: Without Psychosis   NA        NA</span>
 <span class="co">#&gt; 4 Bipolar Disorder: Without Psychosis   NA        NA</span>
 <span class="co">#&gt; 5 Bipolar Disorder: Without Psychosis   NA        NA</span>
-<span class="co">#&gt; 6 Bipolar Disorder: Without Psychosis   NA        NA</span></pre></body></html></div>
+<span class="co">#&gt; 6 Bipolar Disorder: Without Psychosis   NA        NA</span>
+</pre></div>
 </div>
 <div id="get-full-list-of-experiments" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-full-list-of-experiments" class="anchor"></a>Get full list of experiments</h2>
 <p>To obtain a full list of experiments the <code>experiments</code> function will be used:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">nitrc_experiments</span> <span class="kw">&lt;-</span> <span class="no">nitrc</span>$<span class="fu">experiments</span>()
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">nitrc_experiments</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">nitrc_experiments</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">experiments</span>()
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_experiments</span>)
 <span class="co">#&gt;          project      subject          ID               type           label</span>
 <span class="co">#&gt; 1 cs_schizbull08 BPDwoPsy_030 xnat_E02615 xnat:mrSessionData BPDwoPsy_030_MR</span>
 <span class="co">#&gt; 2 cs_schizbull08 BPDwoPsy_031 xnat_E02617 xnat:mrSessionData BPDwoPsy_031_MR</span>
@@ -210,14 +226,16 @@ text-align: justify}
 <span class="co">#&gt; 3   7</span>
 <span class="co">#&gt; 4   8</span>
 <span class="co">#&gt; 5  10</span>
-<span class="co">#&gt; 6   8</span></pre></body></html></div>
+<span class="co">#&gt; 6   8</span>
+</pre></div>
 </div>
 <div id="get-the-complete-list-of-resources-for-a-specific-experiment" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-the-complete-list-of-resources-for-a-specific-experiment" class="anchor"></a>Get the complete list of resources for a specific experiment</h2>
 <p>The scan resources for an experiment can be retrieved using the <code>get_xnat_experiment_resources</code> function:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">xnat_E00026_resources</span> <span class="kw">&lt;-</span> <span class="no">nitrc</span>$<span class="fu">get_xnat_experiment_resources</span>(<span class="st">'xnat_E00026'</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">xnat_E00026_resources</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Name'</span>,<span class="st">'URI'</span>)])
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw">xnat_E00026_resources</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">get_xnat_experiment_resources</span>(<span class="st">'xnat_E00026'</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">xnat_E00026_resources</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Name'</span>,<span class="st">'URI'</span>)])
 <span class="co">#&gt;                               Name</span>
 <span class="co">#&gt; 1                 scan_rest.nii.gz</span>
 <span class="co">#&gt; 2                 scan_rest.nii.gz</span>
@@ -231,7 +249,8 @@ text-align: justify}
 <span class="co">#&gt; 3 /data/experiments/xnat_E00026/scans/anat_mprage_skullstripped/resources/11986/files/scan_mprage_skullstripped.nii.gz</span>
 <span class="co">#&gt; 4  /data/experiments/xnat_E00026/scans/anat_mprage_skullstripped/resources/3968/files/scan_mprage_skullstripped.nii.gz</span>
 <span class="co">#&gt; 5       /data/experiments/xnat_E00026/scans/anat_mprage_anonymized/resources/11985/files/scan_mprage_anonymized.nii.gz</span>
-<span class="co">#&gt; 6        /data/experiments/xnat_E00026/scans/anat_mprage_anonymized/resources/3967/files/scan_mprage_anonymized.nii.gz</span></pre></body></html></div>
+<span class="co">#&gt; 6        /data/experiments/xnat_E00026/scans/anat_mprage_anonymized/resources/3967/files/scan_mprage_anonymized.nii.gz</span>
+</pre></div>
 </div>
 <div id="query-the-xnat-projects-for-matching-entries" class="section level2">
 <h2 class="hasAnchor">
@@ -254,33 +273,37 @@ text-align: justify}
 <li>orientation - image orientation</li>
 </ul>
 <p>To retrieve a list of all subject IDs and associated experiment IDs we can use the <code>query_scan_resources</code> function. In the example below, we are querying the HCP XNAT database for all subjects belonging the the HCP_500 project with scans taken at age 26.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">nitrc_age_26</span> <span class="kw">&lt;-</span> <span class="fu">query_scan_resources</span>(<span class="no">nitrc</span>,<span class="kw">age</span><span class="kw">=</span><span class="st">'26'</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">nitrc_age_26</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"subject_ID"</span>,<span class="st">"experiment_ID"</span>, <span class="st">"Project"</span>, <span class="st">"Age"</span>)])
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw">nitrc_age_26</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/query_scan_resources.html">query_scan_resources</a></span>(<span class="kw">nitrc</span>,age=<span class="st">'26'</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_age_26</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"subject_ID"</span>,<span class="st">"experiment_ID"</span>, <span class="st">"Project"</span>, <span class="st">"Age"</span>)])
 <span class="co">#&gt;        subject_ID   experiment_ID Project Age</span>
 <span class="co">#&gt; 1 NITRC_IR_S05244 NITRC_IR_E10507     ixi  26</span>
 <span class="co">#&gt; 2 NITRC_IR_S05267 NITRC_IR_E10530     ixi  26</span>
 <span class="co">#&gt; 3 NITRC_IR_S05270 NITRC_IR_E10533     ixi  26</span>
 <span class="co">#&gt; 4 NITRC_IR_S05278 NITRC_IR_E10541     ixi  26</span>
 <span class="co">#&gt; 5 NITRC_IR_S05394 NITRC_IR_E10657     ixi  26</span>
-<span class="co">#&gt; 6 NITRC_IR_S05427 NITRC_IR_E10690     ixi  26</span></pre></body></html></div>
+<span class="co">#&gt; 6 NITRC_IR_S05427 NITRC_IR_E10690     ixi  26</span>
+</pre></div>
 </div>
 <div id="getting-data-download-a-single-scan-imageresource-file" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-data-download-a-single-scan-imageresource-file" class="anchor"></a>Getting Data: Download a single scan image/resource file</h2>
 <p>To download a single file we will use the <code>download_file</code> function. Using the first <code>experiment_ID</code> from the above example, we will get all scan resources associated with it first.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">scan_resources</span> <span class="kw">&lt;-</span> <span class="fu">get_scan_resources</span>(<span class="no">nitrc</span>,<span class="st">'xnat_E00026'</span>)
-<span class="no">scan_resources</span>[<span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Name"</span>,<span class="st">"URI"</span>)]</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="kw">scan_resources</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_scan_resources.html">get_scan_resources</a></span>(<span class="kw">nitrc</span>,<span class="st">'xnat_E00026'</span>)
+<span class="kw">scan_resources</span>[<span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Name"</span>,<span class="st">"URI"</span>)]
+</pre></div>
 <p>To download the resource file (100307_3T_BIAS_BC.nii.gz) we will do:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r">&gt; download_xnat_file(nitrc,"/data/experiments/xnat_E00026/scans/anat_mprage_anonymized/resources/3967/files/scan_mprage_anonymized.nii.gz", file_dir = tempdir())
-[1] "/var/folders/kr/05bm5krj0r3fpwxfdmx4xthm0000gn/T//RtmpTNSN5E/scan_mprage_anonymized.nii.gz"</pre></body></html></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">download_xnat_file</span>(nitrc,<span class="st">"/data/experiments/xnat_E00026/scans/anat_mprage_anonymized/resources/3967/files/scan_mprage_anonymized.nii.gz"</span>, <span class="dt">file_dir =</span> <span class="kw">tempdir</span>())</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kr/05bm5krj0r3fpwxfdmx4xthm0000gn/T//RtmpTNSN5E/scan_mprage_anonymized.nii.gz"</span></a></code></pre></div>
 </div>
 <div id="getting-data-download-a-directory-of-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-data-download-a-directory-of-data" class="anchor"></a>Getting Data: Download a directory of data</h2>
 <p>To download all the T1 type images from experiment ConnectomeDB_E03657 we will use the <code>download_xnat_dir</code> function.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r">download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir(), verbose=TRUE)
-/var/folders/kr/05bm5krj0r3fpwxfdmx4xthm0000gn/T//RtmpTNSN5E/NITRC_IR_E10507.zip
-Downloading: 5.2 MB     [1] "/var/folders/kr/05bm5krj0r3fpwxfdmx4xthm0000gn/T//RtmpTNSN5E/NITRC_IR_E10507.zip"</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">download_xnat_dir</span>(nitrc, <span class="dt">experiment_ID=</span><span class="st">'NITRC_IR_E10507'</span>,<span class="dt">scan_type=</span><span class="st">'T2'</span>, <span class="dt">file_dir =</span> <span class="kw">tempdir</span>(), <span class="dt">verbose=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="op">/</span>var<span class="op">/</span>folders<span class="op">/</span>kr<span class="op">/</span>05bm5krj0r3fpwxfdmx4xthm0000gn<span class="op">/</span>T<span class="op">/</span><span class="er">/</span>RtmpTNSN5E<span class="op">/</span>NITRC_IR_E10507.zip</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">Downloading<span class="op">:</span><span class="st"> </span><span class="fl">5.2</span> MB     [<span class="dv">1</span>] <span class="st">"/var/folders/kr/05bm5krj0r3fpwxfdmx4xthm0000gn/T//RtmpTNSN5E/NITRC_IR_E10507.zip"</span></a></code></pre></div>
 </div>
   </div>
 

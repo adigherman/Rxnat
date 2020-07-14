@@ -99,6 +99,9 @@ and subjects." />
     <li>
       <a href="../articles/rxnat.html">Using the Rxnat Package</a>
     </li>
+    <li>
+      <a href="../articles/use_case.html">Rxnat Paper Example</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -133,7 +136,7 @@ functions to retrieve the list of projects, experiments
 and subjects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>xnat_connect</span>(<span class='no'>base_url</span>, <span class='kw'>username</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>password</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xnat_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>xnat_connect</span>(<span class='kw'>base_url</span>, username = <span class='kw'>NULL</span>, password = <span class='kw'>NULL</span>, xnat_name = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,10 +170,11 @@ system variables for a specific XNAT server</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Connect to the NITRC.ORG database</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>xnat_connect</span>(<span class='st'>'https://nitrc.org/ir'</span>, <span class='kw'>xnat_name</span><span class='kw'>=</span><span class='st'>'NITRC'</span>)
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>xnat_connect</span>(<span class='st'>'https://nitrc.org/ir'</span>, xnat_name=<span class='st'>'NITRC'</span>)
 
 <span class='co'>## Connect to the XNAT.CENTRAL database</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>xnat_connect</span>(<span class='st'>'https://central.xnat.org'</span>, <span class='kw'>xnat_name</span><span class='kw'>=</span><span class='st'>"CENTRAL"</span>)</div></pre>
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>xnat_connect</span>(<span class='st'>'https://central.xnat.org'</span>, xnat_name=<span class='st'>"CENTRAL"</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
