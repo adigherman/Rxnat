@@ -1,18 +1,19 @@
 ---
 title: "Rxnat Paper Case Scenario"
 author: "Adi Gherman"
-date: "2020-06-22"
-output: 
-  html_document:
-    keep_md: true
-    theme: cosmo
-    toc: true
-    toc_depth: 3
-    toc_float:
-      collapsed: false
-    number_sections: true      
-bibliography: ../refs.bib      
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Rxnat Paper Case Scenario}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: refs.bib 
 ---
+<style>
+body {
+text-align: justify}
+</style>
+---     
 
 All code for this document is located at [here]().
 
