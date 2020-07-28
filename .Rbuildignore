@@ -6,4 +6,6 @@
 ^cran-comments\.md$
 ^doc$
 ^Meta$
-paper_code.R
+usethis::use_build_ignore(".github")paper_code.R
+use_case.R
+^\.github$
