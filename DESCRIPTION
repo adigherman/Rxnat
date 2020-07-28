@@ -12,17 +12,8 @@ Suggests:
     knitr,
     rmarkdown,
     covr,
-    fslr,
-    WhiteStripe,
-    extrantsr,
-    malf.templates,
     scales,
     devtools
-Remotes:
-    muschellij2/fslr,
-    muschellij2/WhiteStripe,
-    muschellij2/extrantsr,
-    muschellij2/malf.templates
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
