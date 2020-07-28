@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rxnat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.12</span>
       </span>
     </div>
 
@@ -160,8 +160,8 @@ error Should function error if download failed?</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## file_path is retrieved using the get_scan_resources() function</span>
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>xnat_central_conn</span> <span class='op'>&lt;-</span> <span class='fu'>xnat_connect</span>(<span class='st'>'https://central.xnat.org'</span>, xnat_name=<span class='st'>"CENTRAL"</span>)
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>get_scan_resources</span>(<span class='kw'>xnat_central_conn</span>,<span class='st'>'CENTRAL_E00760'</span>)
+<span class='kw'>xnat_central_conn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='xnat_connection.html'>xnat_connect</a></span>(<span class='st'>'https://central.xnat.org'</span>, xnat_name=<span class='st'>"CENTRAL"</span>)
+<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_scan_resources.html'>get_scan_resources</a></span>(<span class='kw'>xnat_central_conn</span>,<span class='st'>'CENTRAL_E00760'</span>)
 <span class='fu'>download_xnat_file</span>(<span class='kw'>xnat_central_conn</span>,<span class='kw'>r</span><span class='op'>$</span><span class='kw'>URI</span>[<span class='fl'>1</span>])
 }</div></pre>
   </div>
