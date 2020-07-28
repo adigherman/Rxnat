@@ -19,8 +19,8 @@ For a more complete list of XNAT implementations around the world you can click 
 
 You can install `Rxnat` from github with:
 ``` {r}
-# install.packages("devtools")
-devtools::install_github("adigherman/Rxnat")
+# install.packages("remotes")
+remotes::install_github("adigherman/Rxnat")
 ```
 
 ## Accessing XNAT Data
@@ -158,4 +158,10 @@ To download all the T2w type images from experiment ConnectomeDB_E03657 we will 
 ``` {r}
 download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w', verbose=TRUE)
 Downloading: 28 MB     [1] "/var/folders/wb/l7jtkdy14f761vm4xr9zxjj80000gn/T//RtmpFfYbQ7/ConnectomeDB_E03657.zip"
+```
+To retrieve just the nii.gz file we can use the `unzip` parameter.
+```{r}
+T2w_file <- download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w', unzip=TRUE)
+T2w_file 
+[1] "/var/folders/wb/l7jtkdy14f761vm4xr9zxjj80000gn/T//RtmpqNhtes/100307_3T/scans/104-T2w/resources/NIFTI/files/100307_3T_T2w_SPC1.nii.gz"
 ```

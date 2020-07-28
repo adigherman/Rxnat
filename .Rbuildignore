@@ -4,4 +4,8 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^cran-comments\.md$
+^doc$
+^Meta$
+paper_code.R
+use_case.R
 ^\.github$

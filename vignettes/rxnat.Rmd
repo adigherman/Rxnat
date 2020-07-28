@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(Rxnat)
+
 ```
 
 ## What is XNAT?
@@ -39,6 +40,7 @@ For a more complete list of XNAT implementations around the world you can click 
 You can install `Rxnat` from github with:
 ``` {r, eval = FALSE}
 # install.packages("devtools")
+library(devtools)
 devtools::install_github("adigherman/Rxnat")
 ```
 

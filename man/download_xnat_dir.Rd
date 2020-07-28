@@ -13,7 +13,8 @@ download_xnat_dir(conn, ...)
 scan_type type of image scan
 zipped zip the downloaded result
 verbose Should progress be added to download?
-error Should function error if download failed?}
+error Should function error if download failed?
+extract Unzip the result and return the files list (based on scan_type)}
 }
 \value{
 Display path to the downloaded file
@@ -23,5 +24,10 @@ Download a full directory of data
 }
 \examples{
 \dontrun{nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
-\dontrun{download_xnat_dir(nitrc, experiment_ID='NITRC_IR_E10507',scan_type='T2', file_dir = tempdir())}
+\dontrun{download_xnat_dir(nitrc, 
+                           experiment_ID='NITRC_IR_E10507',
+                           scan_type='T2', 
+                           file_dir = tempdir(),
+                           extract = TRUE)
+}
 }
