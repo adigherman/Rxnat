@@ -275,6 +275,7 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
 #' @return \code{projects}
 #' @importFrom RCurl basicTextGatherer curlPerform parseHTTPHeader url.exists
 #' @importFrom httr set_cookies timeout
+#' @importFrom tibble as_tibble
 #' @export
 xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
 {
@@ -306,16 +307,18 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     if(!is.null(jsid)) {
       data <- xnat_call('/data/JSESSION', customrequest = 'DELETE')
       jsid <- NULL
+      message('connection closed')
     }
   }
 
   projects <- function() {
     if(is.null(.projects)) {
       data <- xnat_call('/data/projects?format=csv')
+      if(is.null(data)){return(NULL)}
       csv <- string2csv(data)
       csv <- csv[with(csv, order(csv[,1])),]
       rownames(csv) <- 1:nrow(csv)
-      .projects <<- csv
+      .projects <<- as_tibble(csv)
     }
     return(.projects)
   }
@@ -323,6 +326,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   scans <- function(...) {
     data <- xnat_call('/data/search?format=csv',
                       data = get_scan_parameters_search_xml(...))
+    if(is.null(data)){return(NULL)}
     csv <- string2csv(data)
     names(csv) <- c('subject_ID',
                     'Project',
@@ -339,13 +343,14 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                     'Voxel_res_Z',
                     'Orientation',
                     'quarantine_status')
-    return(csv)
+    return(as_tibble(csv))
   }
 
   subjects <- function(project = NULL) {
     if(is.null(.subjects)) {
       data <- xnat_call('/data/search?format=csv',
                          data = subject_search_xml)
+      if(is.null(data)){return(NULL)}
       csv <- string2csv(data)
       names(csv) <- c('project',
                       'ID',
@@ -374,12 +379,13 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       rownames(rv) <- 1:nrow(rv)
       return(rv)
     }
-    return(.subjects)
+    return(as_tibble(.subjects))
   }
 
   get_experiment_types <- function(project = NULL, subject = NULL) {
     if(is.null(.experiment.types)) {
       data <- xnat_call('/data/search/elements?format=csv')
+      if(is.null(data)){return(NULL)}
       csv <- string2csv(data)
       et <- grep('^xnat:.*SessionData$', csv$ELEMENT_NAME, value = TRUE)
       if(length(et) == 0) {
@@ -402,6 +408,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
         in_data <- get_experiment_search_xml(type)
         out_data <- xnat_call('/data/search?format=csv',
                                data = in_data)
+        if(is.null(out_data)){return(NULL)}
         csv <- string2csv(out_data)
         if(nrow(csv) > 0) {
           if(type == 'xnat:mrSessionData') {
@@ -464,7 +471,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
         rownames(rv) <- 1:nrow(rv)
         return(rv)
     }
-    return(.experiments)
+    return(as_tibble(.experiments))
   }
 
   get_xnat_experiment_resources <- function(experiment_ID) {
@@ -643,6 +650,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   .experiments <- NULL
   .experiment.types <- NULL
   .xnat_name <- xnat_name
+  .jsid <- NULL
 
   rv = list(base_url = base_url,
             jsid = jsid,
@@ -759,7 +767,7 @@ download_xnat_dir = function(conn, ...){
 #'   TR, TE, TI, flip, voxel_res, voxel_res_X, voxel_res_Y, voxel_res_Z,
 #'   orientation 
 #' 
-#' @return A data.frame containing all matching rows. XNAT does not do 
+#' @return A tibble containing all matching rows. XNAT does not do 
 #' sql join joins so only one row is returned per match. However each of the 
 #' experiment_IDs returned will have at least one row matching the user
 #' query (even if the displayed results show something else). This function
