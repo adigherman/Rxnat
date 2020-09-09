@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Rxnat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.13</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       <h1 data-toc-skip>Using the Rxnat Package</h1>
                         <h4 class="author">Adi Gherman</h4>
             
-            <h4 class="date">2020-07-28</h4>
+            <h4 class="date">2020-09-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adigherman/Rxnat/blob/master/vignettes/rxnat.Rmd"><code>vignettes/rxnat.Rmd</code></a></small>
       <div class="hidden name"><code>rxnat.Rmd</code></div>
@@ -175,13 +175,15 @@ text-align: justify}
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="kw">nitrc_projects</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">projects</span>()
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_projects</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'ID'</span>,<span class="st">'name'</span>)])
-<span class="co">#&gt;             ID                                                  name</span>
-<span class="co">#&gt; 1        ABIDE                                                 ABIDE</span>
-<span class="co">#&gt; 2     ABIDE_II                                              ABIDE_II</span>
-<span class="co">#&gt; 3     adhd_200                                              ADHD-200</span>
-<span class="co">#&gt; 4  beijing_enh                                      Beijing Enhanced</span>
-<span class="co">#&gt; 5 beijing_eoec                         Beijing Eyes Open Eyes Closed</span>
-<span class="co">#&gt; 6         corr Consortium for Reliability and Reproducibility (CoRR)</span>
+<span class="co">#&gt; # A tibble: 6 x 2</span>
+<span class="co">#&gt;   ID           name                                                 </span>
+<span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                                                </span>
+<span class="co">#&gt; 1 ABIDE        ABIDE                                                </span>
+<span class="co">#&gt; 2 ABIDE_II     ABIDE_II                                             </span>
+<span class="co">#&gt; 3 adhd_200     ADHD-200                                             </span>
+<span class="co">#&gt; 4 beijing_enh  Beijing Enhanced                                     </span>
+<span class="co">#&gt; 5 beijing_eoec Beijing Eyes Open Eyes Closed                        </span>
+<span class="co">#&gt; 6 corr         Consortium for Reliability and Reproducibility (CoRR)</span>
 </pre></div>
 </div>
 <div id="retrieve-a-list-with-all-accessible-subjects" class="section level2">
@@ -191,20 +193,16 @@ text-align: justify}
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="kw">nitrc_subjects</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">subjects</span>()
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_subjects</span>)
-<span class="co">#&gt;          project          ID        label gender handedness yob education ses</span>
-<span class="co">#&gt; 1 cs_schizbull08 xnat_S02601 BPDwoPsy_030      F          R  NA        NA  NA</span>
-<span class="co">#&gt; 2 cs_schizbull08 xnat_S02602 BPDwoPsy_031      F          R  NA        NA  NA</span>
-<span class="co">#&gt; 3 cs_schizbull08 xnat_S02603 BPDwoPsy_032      M          R  NA        NA  NA</span>
-<span class="co">#&gt; 4 cs_schizbull08 xnat_S02604 BPDwoPsy_033      M          R  NA        NA  NA</span>
-<span class="co">#&gt; 5 cs_schizbull08 xnat_S02605 BPDwoPsy_034      M          R  NA        NA  NA</span>
-<span class="co">#&gt; 6 cs_schizbull08 xnat_S02606 BPDwoPsy_035      M          R  NA        NA  NA</span>
-<span class="co">#&gt;                                 group race ethnicity</span>
-<span class="co">#&gt; 1 Bipolar Disorder: Without Psychosis   NA        NA</span>
-<span class="co">#&gt; 2 Bipolar Disorder: Without Psychosis   NA        NA</span>
-<span class="co">#&gt; 3 Bipolar Disorder: Without Psychosis   NA        NA</span>
-<span class="co">#&gt; 4 Bipolar Disorder: Without Psychosis   NA        NA</span>
-<span class="co">#&gt; 5 Bipolar Disorder: Without Psychosis   NA        NA</span>
-<span class="co">#&gt; 6 Bipolar Disorder: Without Psychosis   NA        NA</span>
+<span class="co">#&gt; # A tibble: 6 x 11</span>
+<span class="co">#&gt;   project ID    label gender handedness yob   education ses   group race </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;lgl&gt; &lt;lgl&gt;     &lt;lgl&gt; &lt;chr&gt; &lt;lgl&gt;</span>
+<span class="co">#&gt; 1 cs_sch… xnat… BPDw… F      R          NA    NA        NA    Bipo… NA   </span>
+<span class="co">#&gt; 2 cs_sch… xnat… BPDw… F      R          NA    NA        NA    Bipo… NA   </span>
+<span class="co">#&gt; 3 cs_sch… xnat… BPDw… M      R          NA    NA        NA    Bipo… NA   </span>
+<span class="co">#&gt; 4 cs_sch… xnat… BPDw… M      R          NA    NA        NA    Bipo… NA   </span>
+<span class="co">#&gt; 5 cs_sch… xnat… BPDw… M      R          NA    NA        NA    Bipo… NA   </span>
+<span class="co">#&gt; 6 cs_sch… xnat… BPDw… M      R          NA    NA        NA    Bipo… NA   </span>
+<span class="co">#&gt; # … with 1 more variable: ethnicity &lt;lgl&gt;</span>
 </pre></div>
 </div>
 <div id="get-full-list-of-experiments" class="section level2">
@@ -214,20 +212,15 @@ text-align: justify}
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="kw">nitrc_experiments</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">experiments</span>()
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_experiments</span>)
-<span class="co">#&gt;          project      subject          ID               type           label</span>
-<span class="co">#&gt; 1 cs_schizbull08 BPDwoPsy_030 xnat_E02615 xnat:mrSessionData BPDwoPsy_030_MR</span>
-<span class="co">#&gt; 2 cs_schizbull08 BPDwoPsy_031 xnat_E02617 xnat:mrSessionData BPDwoPsy_031_MR</span>
-<span class="co">#&gt; 3 cs_schizbull08 BPDwoPsy_032 xnat_E02619 xnat:mrSessionData BPDwoPsy_032_MR</span>
-<span class="co">#&gt; 4 cs_schizbull08 BPDwoPsy_033 xnat_E02621 xnat:mrSessionData BPDwoPsy_033_MR</span>
-<span class="co">#&gt; 5 cs_schizbull08 BPDwoPsy_034 xnat_E02623 xnat:mrSessionData BPDwoPsy_034_MR</span>
-<span class="co">#&gt; 6 cs_schizbull08 BPDwoPsy_035 xnat_E02625 xnat:mrSessionData BPDwoPsy_035_MR</span>
-<span class="co">#&gt;   age</span>
-<span class="co">#&gt; 1   9</span>
-<span class="co">#&gt; 2  15</span>
-<span class="co">#&gt; 3   7</span>
-<span class="co">#&gt; 4   8</span>
-<span class="co">#&gt; 5  10</span>
-<span class="co">#&gt; 6   8</span>
+<span class="co">#&gt; # A tibble: 6 x 6</span>
+<span class="co">#&gt;   project        subject      ID          type              label            age</span>
+<span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;             &lt;chr&gt;          &lt;int&gt;</span>
+<span class="co">#&gt; 1 cs_schizbull08 BPDwoPsy_030 xnat_E02615 xnat:mrSessionDa… BPDwoPsy_030_…     9</span>
+<span class="co">#&gt; 2 cs_schizbull08 BPDwoPsy_031 xnat_E02617 xnat:mrSessionDa… BPDwoPsy_031_…    15</span>
+<span class="co">#&gt; 3 cs_schizbull08 BPDwoPsy_032 xnat_E02619 xnat:mrSessionDa… BPDwoPsy_032_…     7</span>
+<span class="co">#&gt; 4 cs_schizbull08 BPDwoPsy_033 xnat_E02621 xnat:mrSessionDa… BPDwoPsy_033_…     8</span>
+<span class="co">#&gt; 5 cs_schizbull08 BPDwoPsy_034 xnat_E02623 xnat:mrSessionDa… BPDwoPsy_034_…    10</span>
+<span class="co">#&gt; 6 cs_schizbull08 BPDwoPsy_035 xnat_E02625 xnat:mrSessionDa… BPDwoPsy_035_…     8</span>
 </pre></div>
 </div>
 <div id="get-the-complete-list-of-resources-for-a-specific-experiment" class="section level2">
@@ -277,13 +270,15 @@ text-align: justify}
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="kw">nitrc_age_26</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/query_scan_resources.html">query_scan_resources</a></span>(<span class="kw">nitrc</span>,age=<span class="st">'26'</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_age_26</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"subject_ID"</span>,<span class="st">"experiment_ID"</span>, <span class="st">"Project"</span>, <span class="st">"Age"</span>)])
-<span class="co">#&gt;        subject_ID   experiment_ID Project Age</span>
-<span class="co">#&gt; 1 NITRC_IR_S05244 NITRC_IR_E10507     ixi  26</span>
-<span class="co">#&gt; 2 NITRC_IR_S05267 NITRC_IR_E10530     ixi  26</span>
-<span class="co">#&gt; 3 NITRC_IR_S05270 NITRC_IR_E10533     ixi  26</span>
-<span class="co">#&gt; 4 NITRC_IR_S05278 NITRC_IR_E10541     ixi  26</span>
-<span class="co">#&gt; 5 NITRC_IR_S05394 NITRC_IR_E10657     ixi  26</span>
-<span class="co">#&gt; 6 NITRC_IR_S05427 NITRC_IR_E10690     ixi  26</span>
+<span class="co">#&gt; # A tibble: 6 x 4</span>
+<span class="co">#&gt;   subject_ID      experiment_ID   Project   Age</span>
+<span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;   &lt;int&gt;</span>
+<span class="co">#&gt; 1 NITRC_IR_S05244 NITRC_IR_E10507 ixi        26</span>
+<span class="co">#&gt; 2 NITRC_IR_S05267 NITRC_IR_E10530 ixi        26</span>
+<span class="co">#&gt; 3 NITRC_IR_S05270 NITRC_IR_E10533 ixi        26</span>
+<span class="co">#&gt; 4 NITRC_IR_S05278 NITRC_IR_E10541 ixi        26</span>
+<span class="co">#&gt; 5 NITRC_IR_S05394 NITRC_IR_E10657 ixi        26</span>
+<span class="co">#&gt; 6 NITRC_IR_S05427 NITRC_IR_E10690 ixi        26</span>
 </pre></div>
 </div>
 <div id="getting-data-download-a-single-scan-imageresource-file" class="section level2">
@@ -323,7 +318,7 @@ text-align: justify}
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>
