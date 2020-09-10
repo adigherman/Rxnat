@@ -7,7 +7,7 @@ warnings_are_errors: true
 use_bioc: true
 bioc_required: true
 cran: http://cran.rstudio.com
-dist: trusty
+dist: xenial
 
 os:
   - linux
