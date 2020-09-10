@@ -306,7 +306,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   close <- function() {
     if(!is.null(jsid)) {
       data <- xnat_call('/data/JSESSION', customrequest = 'DELETE')
-      jsid <- NULL
+      jsid <<- NULL
       message('connection closed')
     }
   }
