@@ -295,9 +295,30 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                 postfields = data,
                 ssl.verifypeer = FALSE,
                 cookie = paste('JSESSIONID=', jsid, sep = ''))
+    msg = ""
+    if (!is.null(xnat_name)) {
+      msg = paste0(
+        "or set ", 
+        paste0(toupper(xnat_name), "_RXNAT_", 
+               c("USER", "PASS"), collapse = ", "
+        )
+      )
+    }
+    warning(
+      paste0(
+        "No username was given when running xnat_connect, you may be able to see ", 
+        "public information from XNAT server. ", "To authenticate, pass",
+        " in username/password ", msg
+      )
+    )
+    
     if(parseHTTPHeader(header$value())['status'] >= 400) {
       msg = paste0("XNAT call failed, message: ", 
                    parseHTTPHeader(header$value())['statusMessage'])
+      if (!credentials_given) {
+        msg = paste0(msg, ".  You may need to run xnat_connect again with", 
+                     " credentials.")
+      }
       stop(msg)
       # message("No internet connection or data source broken.")
       # return(NULL)
@@ -588,8 +609,10 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   header <- basicTextGatherer()
   
   if(is.null(username) && !is.null(xnat_name)) {
-    env_username = Sys.getenv(paste0(toupper(xnat_name),"_RXNAT_USER"), unset=NA)
+    varname = paste0(toupper(xnat_name),"_RXNAT_USER")
+    env_username = Sys.getenv(varname, unset=NA)
     if(!is.na(env_username)){
+      message(varname, " is being used for user")
       username = env_username
     }
   }
@@ -600,34 +623,21 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   }
   
   if(is.null(password) && !is.null(xnat_name)) {
-    env_password = Sys.getenv(paste0(toupper(xnat_name),"_RXNAT_PASS"), unset=NA)
+    varname = paste0(toupper(xnat_name),"_RXNAT_PASS")
+    env_password = Sys.getenv(varname, unset=NA)
     if(!is.na(env_password)) {
+      message(varname, " is being used for password")
       password = env_password
     }
   }
   else if(!is.null(xnat_name)){
     args = list(password)
-    names(args) = paste0(xnat_name,"_RXNAT_PASS")
+    names(args) = paste0(toupper(xnat_name),"_RXNAT_PASS")
     do.call(Sys.setenv, args)
   }
   
   if(is.null(username)) {
-    msg = ""
-    if (!is.null(xnat_name)) {
-      msg = paste0(
-        "or set ", 
-        paste0(xnat_name, "_RXNAT_", 
-               c("USER", "PASS"), collapse = ", "
-        )
-      )
-    }
-    warning(
-      paste0(
-        "No username was given, you may be able to see ", 
-        "public information from XNAT server. ", "To authenticate, pass",
-        " in username/password ", msg
-      )
-    )
+    credentials_given = FALSE
     curlPerform(url = paste(base_url, '/', sep = ''),
                 writefunction = reader$update,
                 headerfunction = header$update,
@@ -642,7 +652,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       stop('error starting session')
     }
   } else {
-    
+    credentials_given = TRUE
     curlPerform(url = paste(base_url, '/data/JSESSION', sep = ''),
                 writefunction = reader$update,
                 headerfunction = header$update,
@@ -670,6 +680,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   .experiment.types <- NULL
   .xnat_name <- xnat_name
   .jsid <- NULL
+  credentials_given <- credentials_given
   
   rv = list(base_url = base_url,
             jsid = jsid,
@@ -682,6 +693,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
             get_xnat_experiment_resources = get_xnat_experiment_resources,
             download_file = download_file,
             download_dir = download_dir,
+            credentials_given = credentials_given,
             scans = scans)
   
   class(rv) <- 'RXNATConnection'
