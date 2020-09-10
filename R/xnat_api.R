@@ -295,9 +295,12 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                   postfields = data,
                   ssl.verifypeer = FALSE,
                   cookie = paste('JSESSIONID=', jsid, sep = ''))
-      if(parseHTTPHeader(header$value())['status'] != 200) {
-        message("No internet connection or data source broken.")
-        return(NULL)
+      if(parseHTTPHeader(header$value())['status'] >= 400) {
+        msg = paste0("XNAT call failed, message: ", 
+          parseHTTPHeader(header$value())['statusMessage'])
+        stop(msg)
+        # message("No internet connection or data source broken.")
+        # return(NULL)
       }
       return(reader$value())
     }
