@@ -14,7 +14,7 @@ TR, TE, TI, flip, voxel_res, voxel_res_X, voxel_res_Y, voxel_res_Z,
 orientation}
 }
 \value{
-A data.frame containing all matching rows. XNAT does not do 
+A tibble containing all matching rows. XNAT does not do 
 sql join joins so only one row is returned per match. However each of the 
 experiment_IDs returned will have at least one row matching the user
 query (even if the displayed results show something else). This function
