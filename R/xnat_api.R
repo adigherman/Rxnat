@@ -506,7 +506,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       csv <- string2csv(data)
     }
     
-    return(csv)
+    return(as_tibble(csv))
   }
   
   download_file <- function(file_path,
