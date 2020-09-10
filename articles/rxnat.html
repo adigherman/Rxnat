@@ -174,6 +174,9 @@ text-align: justify}
 <p>Once a connection is established using the <code>xnat_connect</code> function a list of available projects can be easily retrieved by using the class internal function <code>projects</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="kw">nitrc_projects</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">projects</span>()
+<span class="co">#&gt; Warning in xnat_call("/data/projects?format=csv"): No username was given when</span>
+<span class="co">#&gt; running xnat_connect, you may be able to see public information from XNAT</span>
+<span class="co">#&gt; server. To authenticate, pass in username/password</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_projects</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'ID'</span>,<span class="st">'name'</span>)])
 <span class="co">#&gt; # A tibble: 6 x 2</span>
 <span class="co">#&gt;   ID           name                                                 </span>
@@ -192,6 +195,9 @@ text-align: justify}
 <p>A full list of subjects for each XNAT connection can be retrieved using the <code>subjects</code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="kw">nitrc_subjects</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">subjects</span>()
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = subject_search_xml):</span>
+<span class="co">#&gt; No username was given when running xnat_connect, you may be able to see public</span>
+<span class="co">#&gt; information from XNAT server. To authenticate, pass in username/password</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_subjects</span>)
 <span class="co">#&gt; # A tibble: 6 x 11</span>
 <span class="co">#&gt;   project ID    label gender handedness yob   education ses   group race </span>
@@ -211,6 +217,116 @@ text-align: justify}
 <p>To obtain a full list of experiments the <code>experiments</code> function will be used:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="kw">nitrc_experiments</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">experiments</span>()
+<span class="co">#&gt; Warning in xnat_call("/data/search/elements?format=csv"): No username was given</span>
+<span class="co">#&gt; when running xnat_connect, you may be able to see public information from XNAT</span>
+<span class="co">#&gt; server. To authenticate, pass in username/password</span>
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
+
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data = in_data): No username was</span>
+<span class="co">#&gt; given when running xnat_connect, you may be able to see public information from</span>
+<span class="co">#&gt; XNAT server. To authenticate, pass in username/password</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_experiments</span>)
 <span class="co">#&gt; # A tibble: 6 x 6</span>
 <span class="co">#&gt;   project        subject      ID          type              label            age</span>
@@ -229,6 +345,14 @@ text-align: justify}
 <p>The scan resources for an experiment can be retrieved using the <code>get_xnat_experiment_resources</code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="kw">xnat_E00026_resources</span> <span class="op">&lt;-</span> <span class="kw">nitrc</span><span class="op">$</span><span class="fu">get_xnat_experiment_resources</span>(<span class="st">'xnat_E00026'</span>)
+<span class="co">#&gt; Warning in xnat_call(paste0("/data/experiments/", experiment_ID, "/files?</span>
+<span class="co">#&gt; format=csv")): No username was given when running xnat_connect, you may be able</span>
+<span class="co">#&gt; to see public information from XNAT server. To authenticate, pass in username/</span>
+<span class="co">#&gt; password</span>
+<span class="co">#&gt; Warning in xnat_call(paste0("/data/experiments/", experiment_ID, "/scans/ALL/</span>
+<span class="co">#&gt; files?format=csv")): No username was given when running xnat_connect, you may</span>
+<span class="co">#&gt; be able to see public information from XNAT server. To authenticate, pass in</span>
+<span class="co">#&gt; username/password</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">xnat_E00026_resources</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Name'</span>,<span class="st">'URI'</span>)])
 <span class="co">#&gt;                               Name</span>
 <span class="co">#&gt; 1                 scan_rest.nii.gz</span>
@@ -269,6 +393,10 @@ text-align: justify}
 <p>To retrieve a list of all subject IDs and associated experiment IDs we can use the <code>query_scan_resources</code> function. In the example below, we are querying the HCP XNAT database for all subjects belonging the the HCP_500 project with scans taken at age 26.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="kw">nitrc_age_26</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/query_scan_resources.html">query_scan_resources</a></span>(<span class="kw">nitrc</span>,age=<span class="st">'26'</span>)
+<span class="co">#&gt; Warning in xnat_call("/data/search?format=csv", data =</span>
+<span class="co">#&gt; get_scan_parameters_search_xml(...)): No username was given when running</span>
+<span class="co">#&gt; xnat_connect, you may be able to see public information from XNAT server. To</span>
+<span class="co">#&gt; authenticate, pass in username/password</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">nitrc_age_26</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"subject_ID"</span>,<span class="st">"experiment_ID"</span>, <span class="st">"Project"</span>, <span class="st">"Age"</span>)])
 <span class="co">#&gt; # A tibble: 6 x 4</span>
 <span class="co">#&gt;   subject_ID      experiment_ID   Project   Age</span>
