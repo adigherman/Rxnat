@@ -354,20 +354,15 @@ text-align: justify}
 <span class="co">#&gt; be able to see public information from XNAT server. To authenticate, pass in</span>
 <span class="co">#&gt; username/password</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">xnat_E00026_resources</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Name'</span>,<span class="st">'URI'</span>)])
-<span class="co">#&gt;                               Name</span>
-<span class="co">#&gt; 1                 scan_rest.nii.gz</span>
-<span class="co">#&gt; 2                 scan_rest.nii.gz</span>
-<span class="co">#&gt; 3 scan_mprage_skullstripped.nii.gz</span>
-<span class="co">#&gt; 4 scan_mprage_skullstripped.nii.gz</span>
-<span class="co">#&gt; 5    scan_mprage_anonymized.nii.gz</span>
-<span class="co">#&gt; 6    scan_mprage_anonymized.nii.gz</span>
-<span class="co">#&gt;                                                                                                                    URI</span>
-<span class="co">#&gt; 1                                 /data/experiments/xnat_E00026/scans/func_rest/resources/11987/files/scan_rest.nii.gz</span>
-<span class="co">#&gt; 2                                  /data/experiments/xnat_E00026/scans/func_rest/resources/3969/files/scan_rest.nii.gz</span>
-<span class="co">#&gt; 3 /data/experiments/xnat_E00026/scans/anat_mprage_skullstripped/resources/11986/files/scan_mprage_skullstripped.nii.gz</span>
-<span class="co">#&gt; 4  /data/experiments/xnat_E00026/scans/anat_mprage_skullstripped/resources/3968/files/scan_mprage_skullstripped.nii.gz</span>
-<span class="co">#&gt; 5       /data/experiments/xnat_E00026/scans/anat_mprage_anonymized/resources/11985/files/scan_mprage_anonymized.nii.gz</span>
-<span class="co">#&gt; 6        /data/experiments/xnat_E00026/scans/anat_mprage_anonymized/resources/3967/files/scan_mprage_anonymized.nii.gz</span>
+<span class="co">#&gt; # A tibble: 6 x 2</span>
+<span class="co">#&gt;   Name                     URI                                                  </span>
+<span class="co">#&gt;   &lt;chr&gt;                    &lt;chr&gt;                                                </span>
+<span class="co">#&gt; 1 scan_rest.nii.gz         /data/experiments/xnat_E00026/scans/func_rest/resour…</span>
+<span class="co">#&gt; 2 scan_rest.nii.gz         /data/experiments/xnat_E00026/scans/func_rest/resour…</span>
+<span class="co">#&gt; 3 scan_mprage_skullstripp… /data/experiments/xnat_E00026/scans/anat_mprage_skul…</span>
+<span class="co">#&gt; 4 scan_mprage_skullstripp… /data/experiments/xnat_E00026/scans/anat_mprage_skul…</span>
+<span class="co">#&gt; 5 scan_mprage_anonymized.… /data/experiments/xnat_E00026/scans/anat_mprage_anon…</span>
+<span class="co">#&gt; 6 scan_mprage_anonymized.… /data/experiments/xnat_E00026/scans/anat_mprage_anon…</span>
 </pre></div>
 </div>
 <div id="query-the-xnat-projects-for-matching-entries" class="section level2">
