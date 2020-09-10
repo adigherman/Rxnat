@@ -119,7 +119,7 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
                                            voxel_res_Y = NULL,
                                            voxel_res_Z = NULL,
                                            orientation = NULL) {
-
+  
   scan_search_xml = '<?xml version="1.0" encoding="UTF-8"?>
       <xdat:search ID="" allow-diff-columns="0" secure="false" brief-description="MR Sessions"
       xmlns:xdat="http://nrg.wustl.edu/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -223,32 +223,32 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
         <xdat:header>Orientation</xdat:header>
       </xdat:search_field>
       '
-
-    query_xml <- NULL
-
-    this_args <- match.call()
-
-    for(i in names(this_args)) {
-      if(!is.null(this_args[[`i`]])){
-        query_xml <- paste0(query_xml,sprintf('<xdat:criteria override_value_formatting="0">
+  
+  query_xml <- NULL
+  
+  this_args <- match.call()
+  
+  for(i in names(this_args)) {
+    if(!is.null(this_args[[`i`]])){
+      query_xml <- paste0(query_xml,sprintf('<xdat:criteria override_value_formatting="0">
                                       <xdat:schema_field>%s</xdat:schema_field>
                                       <xdat:comparison_type>=</xdat:comparison_type>
                                       <xdat:value>%s</xdat:value>
                                       </xdat:criteria>',scan_params_xnat_list[[`i`]],this_args[[`i`]]))
-
-
-
-      }
+      
+      
+      
     }
-
-    if(!is.null(query_xml)){
-      query_xml <- paste0('<xdat:search_where method="AND">',query_xml,'</xdat:search_where>')
-      scan_search_xml <- paste0(scan_search_xml,query_xml)
-    }
-
-    scan_search_xml <- paste0(scan_search_xml,'</xdat:search>')
-    return(scan_search_xml)
-    #return(query_xml)
+  }
+  
+  if(!is.null(query_xml)){
+    query_xml <- paste0('<xdat:search_where method="AND">',query_xml,'</xdat:search_where>')
+    scan_search_xml <- paste0(scan_search_xml,query_xml)
+  }
+  
+  scan_search_xml <- paste0(scan_search_xml,'</xdat:search>')
+  return(scan_search_xml)
+  #return(query_xml)
 }
 
 #' @title Make a connection to an XNAT server
@@ -283,29 +283,50 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     if(is.null(jsid)) {
       stop('not connected')
     }
-      reader <- basicTextGatherer()
-      header <- basicTextGatherer()
-      if(nchar(data) > 0) {
-        customrequest = 'POST'
-      }
-      curlPerform(url = paste(base_url, request, sep = ''),
-                  writefunction = reader$update,
-                  headerfunction = header$update,
-                  customrequest = customrequest,
-                  postfields = data,
-                  ssl.verifypeer = FALSE,
-                  cookie = paste('JSESSIONID=', jsid, sep = ''))
-      if(parseHTTPHeader(header$value())['status'] >= 400) {
-        msg = paste0("XNAT call failed, message: ", 
-          parseHTTPHeader(header$value())['statusMessage'])
-        stop(msg)
-        # message("No internet connection or data source broken.")
-        # return(NULL)
-      }
-      return(reader$value())
+    reader <- basicTextGatherer()
+    header <- basicTextGatherer()
+    if(nchar(data) > 0) {
+      customrequest = 'POST'
     }
-
-
+    curlPerform(url = paste(base_url, request, sep = ''),
+                writefunction = reader$update,
+                headerfunction = header$update,
+                customrequest = customrequest,
+                postfields = data,
+                ssl.verifypeer = FALSE,
+                cookie = paste('JSESSIONID=', jsid, sep = ''))
+    msg = ""
+    if (!is.null(xnat_name)) {
+      msg = paste0(
+        "or set ", 
+        paste0(toupper(xnat_name), "_RXNAT_", 
+               c("USER", "PASS"), collapse = ", "
+        )
+      )
+    }
+    warning(
+      paste0(
+        "No username was given when running xnat_connect, you may be able to see ", 
+        "public information from XNAT server. ", "To authenticate, pass",
+        " in username/password ", msg
+      )
+    )
+    
+    if(parseHTTPHeader(header$value())['status'] >= 400) {
+      msg = paste0("XNAT call failed, message: ", 
+                   parseHTTPHeader(header$value())['statusMessage'])
+      if (!credentials_given) {
+        msg = paste0(msg, ".  You may need to run xnat_connect again with", 
+                     " credentials.")
+      }
+      stop(msg)
+      # message("No internet connection or data source broken.")
+      # return(NULL)
+    }
+    return(reader$value())
+  }
+  
+  
   close <- function() {
     if(!is.null(jsid)) {
       data <- xnat_call('/data/JSESSION', customrequest = 'DELETE')
@@ -313,7 +334,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       message('connection closed')
     }
   }
-
+  
   projects <- function() {
     if(is.null(.projects)) {
       data <- xnat_call('/data/projects?format=csv')
@@ -325,7 +346,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     }
     return(.projects)
   }
-
+  
   scans <- function(...) {
     data <- xnat_call('/data/search?format=csv',
                       data = get_scan_parameters_search_xml(...))
@@ -348,11 +369,11 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                     'quarantine_status')
     return(as_tibble(csv))
   }
-
+  
   subjects <- function(project = NULL) {
     if(is.null(.subjects)) {
       data <- xnat_call('/data/search?format=csv',
-                         data = subject_search_xml)
+                        data = subject_search_xml)
       if(is.null(data)){return(NULL)}
       csv <- string2csv(data)
       names(csv) <- c('project',
@@ -384,7 +405,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     }
     return(as_tibble(.subjects))
   }
-
+  
   get_experiment_types <- function(project = NULL, subject = NULL) {
     if(is.null(.experiment.types)) {
       data <- xnat_call('/data/search/elements?format=csv')
@@ -403,14 +424,14 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     }
     return(.experiment.types)
   }
-
+  
   experiments <- function(e_project = NULL, e_subject = NULL) {
     if(is.null(.experiments)) {
       experiments <- NULL
       for(type in get_experiment_types()) {
         in_data <- get_experiment_search_xml(type)
         out_data <- xnat_call('/data/search?format=csv',
-                               data = in_data)
+                              data = in_data)
         if(is.null(out_data)){return(NULL)}
         csv <- string2csv(out_data)
         if(nrow(csv) > 0) {
@@ -430,34 +451,34 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
           experiments <- rbind(experiments, csv)
         }
       }
-    if(is.null(experiments)) {
-      .experiments <<- data.frame()
+      if(is.null(experiments)) {
+        .experiments <<- data.frame()
+      }
+      else {
+        ss <- subset(subjects(), select = c('ID', 'label', 'project'))
+        
+        experiments <- merge(experiments,
+                             ss,
+                             by.x = 'subject_id',
+                             by.y = 'ID')
+        experiments <- subset(experiments, select = c('project',
+                                                      'label.y',
+                                                      'ID',
+                                                      'type',
+                                                      'label.x',
+                                                      'age'))
+        names(experiments) <- c('project',
+                                'subject',
+                                'ID',
+                                'type',
+                                'label',
+                                'age')
+        experiments <- experiments[with(experiments,
+                                        order(experiments[,1],experiments[,2],experiments[,5])),]
+        rownames(experiments) <- 1:nrow(experiments)
+        .experiments <<- experiments
+      }
     }
-    else {
-      ss <- subset(subjects(), select = c('ID', 'label', 'project'))
-
-      experiments <- merge(experiments,
-                           ss,
-                           by.x = 'subject_id',
-                           by.y = 'ID')
-      experiments <- subset(experiments, select = c('project',
-                                                    'label.y',
-                                                    'ID',
-                                                    'type',
-                                                    'label.x',
-                                                    'age'))
-      names(experiments) <- c('project',
-                              'subject',
-                              'ID',
-                              'type',
-                              'label',
-                              'age')
-      experiments <- experiments[with(experiments,
-                                      order(experiments[,1],experiments[,2],experiments[,5])),]
-      rownames(experiments) <- 1:nrow(experiments)
-      .experiments <<- experiments
-    }
-  }
     if(!is.null(e_project)) {
       if(!e_project %in% projects()$ID) {
         stop(sprintf('unknown project "%s"', e_project))
@@ -470,13 +491,13 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
           return(rv)
         }
       }
-        rv <- .experiments[.experiments$project==e_project,]
-        rownames(rv) <- 1:nrow(rv)
-        return(rv)
+      rv <- .experiments[.experiments$project==e_project,]
+      rownames(rv) <- 1:nrow(rv)
+      return(rv)
     }
     return(as_tibble(.experiments))
   }
-
+  
   get_xnat_experiment_resources <- function(experiment_ID) {
     data <- xnat_call(paste0('/data/experiments/',experiment_ID,'/files?format=csv'))
     csv <- string2csv(data)
@@ -484,17 +505,17 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       data <- xnat_call(paste0('/data/experiments/',experiment_ID,'/scans/ALL/files?format=csv'))
       csv <- string2csv(data)
     }
-
+    
     return(csv)
   }
-
+  
   download_file <- function(file_path,
                             file_dir = NULL,
                             destfile = NULL,
                             prefix = NULL,
                             verbose = FALSE,
                             error = FALSE
-                            ) {
+  ) {
     if(is.null(file_dir)) {
       file_dir <- tempdir()
     }
@@ -514,7 +535,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       args = c(args, list(progress()))
     }
     ret <- do.call("GET", args)
-
+    
     if (error) {
       stop_for_status(ret)
     }
@@ -526,7 +547,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       return(NULL)
     }
   }
-
+  
   download_dir <- function(experiment_ID,
                            file_dir = NULL,
                            scan_type = NULL,
@@ -586,10 +607,12 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
   
   reader <- basicTextGatherer()
   header <- basicTextGatherer()
-
+  
   if(is.null(username) && !is.null(xnat_name)) {
-    env_username = Sys.getenv(paste0(toupper(xnat_name),"_RXNAT_USER"), unset=NA)
+    varname = paste0(toupper(xnat_name),"_RXNAT_USER")
+    env_username = Sys.getenv(varname, unset=NA)
     if(!is.na(env_username)){
+      message(varname, " is being used for user")
       username = env_username
     }
   }
@@ -598,20 +621,23 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     names(args) = paste0(toupper(xnat_name),"_RXNAT_USER")
     do.call(Sys.setenv, args)
   }
-
+  
   if(is.null(password) && !is.null(xnat_name)) {
-    env_password = Sys.getenv(paste0(toupper(xnat_name),"_RXNAT_PASS"), unset=NA)
+    varname = paste0(toupper(xnat_name),"_RXNAT_PASS")
+    env_password = Sys.getenv(varname, unset=NA)
     if(!is.na(env_password)) {
+      message(varname, " is being used for password")
       password = env_password
     }
   }
   else if(!is.null(xnat_name)){
     args = list(password)
-    names(args) = paste0(xnat_name,"_RXNAT_PASS")
+    names(args) = paste0(toupper(xnat_name),"_RXNAT_PASS")
     do.call(Sys.setenv, args)
   }
-
+  
   if(is.null(username)) {
+    credentials_given = FALSE
     curlPerform(url = paste(base_url, '/', sep = ''),
                 writefunction = reader$update,
                 headerfunction = header$update,
@@ -626,7 +652,7 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
       stop('error starting session')
     }
   } else {
-
+    credentials_given = TRUE
     curlPerform(url = paste(base_url, '/data/JSESSION', sep = ''),
                 writefunction = reader$update,
                 headerfunction = header$update,
@@ -641,20 +667,21 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
     }
     jsid <- reader$value()
   }
-
+  
   is.connected <- function() {
     if(is.null(jsid))
       return(FALSE)
     return(TRUE)
   }
-
+  
   .projects <- NULL
   .subjects <- NULL
   .experiments <- NULL
   .experiment.types <- NULL
   .xnat_name <- xnat_name
   .jsid <- NULL
-
+  credentials_given <- credentials_given
+  
   rv = list(base_url = base_url,
             jsid = jsid,
             close = close,
@@ -666,10 +693,11 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
             get_xnat_experiment_resources = get_xnat_experiment_resources,
             download_file = download_file,
             download_dir = download_dir,
+            credentials_given = credentials_given,
             scans = scans)
-
+  
   class(rv) <- 'RXNATConnection'
-
+  
   return(rv)
 }
 
@@ -690,7 +718,7 @@ string2csv <- function(string) {
   c <- textConnection(string)
   csv <- read.csv(c, as.is = TRUE)
   close(c)
-
+  
   return(csv)
 }
 
