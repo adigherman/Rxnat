@@ -304,15 +304,17 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
         )
       )
     }
-    warning(
-      paste0(
-        "No username was given when running xnat_connect, you may be able to see ", 
-        "public information from XNAT server. ", "To authenticate, pass",
-        " in username/password ", msg
+    if (!credentials_given) {
+      warning(
+        paste0(
+          "No username was given when running xnat_connect, you may be able to see ", 
+          "public information from XNAT server. ", "To authenticate, pass",
+          " in username/password ", msg
+        )
       )
-    )
+    }
     
-    if(parseHTTPHeader(header$value())['status'] >= 400) {
+    if (parseHTTPHeader(header$value())['status'] >= 400) {
       msg = paste0("XNAT call failed, message: ", 
                    parseHTTPHeader(header$value())['statusMessage'])
       if (!credentials_given) {
@@ -660,10 +662,10 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                 userpwd = paste(username, password, sep = ':'),
                 httpauth=1L)
     status = parseHTTPHeader(header$value())['status']
-    if(status == 401) {
-      stop('bad username/password')
-    } else if(status != 200) {
-      stop('error authenticating')
+    if (parseHTTPHeader(header$value())['status'] >= 400) {
+      msg = paste0("XNAT call failed, message: ", 
+                   parseHTTPHeader(header$value())['statusMessage'])    
+      stop(msg)
     }
     jsid <- reader$value()
   }
