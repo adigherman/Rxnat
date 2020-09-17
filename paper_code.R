@@ -1,6 +1,8 @@
 # Install Rxnat dependencies for the examplein the paper
-# The paper example requires FSL as a system dependency.
+# The paper example requires cmake, ITK and FSL, as a system dependencies
+# cmake installation guide can be found here: https://cmake.org/install/
 # To install FSL please follow this guide: https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation
+# The ITK installation guide can be found here: https://itk.org/download/
 #
 # The R dependencies can be installed easily using 
 # `install.packages()` function 
@@ -13,6 +15,10 @@
 # neuro_install('extrantsr')
 # neuro_install('malf.templates')
 # neuro_install('WhiteStripe')
+#
+# Instead of installing all the system dependencies and package dependencies 
+# from above, one can easily download the neurodocker image from this
+# page: https://neuroconductor.org/docker-release
 #
 # Authentication against the XNAT server can be done in two
 # different ways by setting up environment variables in R, or 
@@ -33,8 +39,6 @@
 # is using the same name as the first part of the environment variables
 # (eg. NITRC, HCP).
 
-
-# add user name and password, or provide them inline
 library(dplyr)
 library(fslr)
 library(extrantsr)
