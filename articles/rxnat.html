@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/download_full_subject_data.html">Rxnat - Download full subject data</a>
+    </li>
+    <li>
       <a href="../articles/rxnat.html">Using the Rxnat Package</a>
     </li>
     <li>
@@ -85,7 +88,7 @@
       <h1 data-toc-skip>Using the Rxnat Package</h1>
                         <h4 class="author">Adi Gherman</h4>
             
-            <h4 class="date">2020-09-17</h4>
+            <h4 class="date">2020-09-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adigherman/Rxnat/blob/master/vignettes/rxnat.Rmd"><code>vignettes/rxnat.Rmd</code></a></small>
       <div class="hidden name"><code>rxnat.Rmd</code></div>
@@ -156,8 +159,8 @@ text-align: justify}
 <div id="setting-up-system-environment-variables" class="section level4">
 <h4 class="hasAnchor">
 <a href="#setting-up-system-environment-variables" class="anchor"></a>Setting up system environment variables</h4>
-<p>To use system environment variables we need to add them to the <code>.Renviron</code> file located in the user’s home folder. Use <code><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv("HOME")</a></code> to get the path (for unix/osx users the location can be easily accessed with ~, eg. <code>vi ~/.Renviron</code>). The <code>Rxnat</code> package will be able to automatically read / use a system environment variable provided the following format is used: <code>XXXX_Rxnat_USER</code> and <code>XXXX_Rxnat_PASS</code>. <code>XXXX</code> is provided as an argument when an XNAT connection is initiated.</p>
-<p>As an example <code>NITRC</code> is used as argument and the system environment variables names should be <code>NITRC_Rxnat_USER</code>, and <code>NITRC_Rxnat_PASS</code>.</p>
+<p>To use system environment variables we need to add them to the <code>.Renviron</code> file located in the user’s home folder. Use <code><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv("HOME")</a></code> to get the path (for unix/osx users the location can be easily accessed with ~, eg. <code>vi ~/.Renviron</code>). The <code>Rxnat</code> package will be able to automatically read / use a system environment variable provided the following format is used: <code>XXXX_RXNAT_USER</code> and <code>XXXX_RXNAT_PASS</code>. <code>XXXX</code> is provided as an argument when an XNAT connection is initiated.</p>
+<p>As an example <code>NITRC</code> is used as argument and the system environment variables names should be <code>NITRC_RXNAT_USER</code>, and <code>NITRC_RXNAT_PASS</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw">nitrc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xnat_connection.html">xnat_connect</a></span>(<span class="st">'https://nitrc.org/ir'</span>, xnat_name=<span class="st">'NITRC'</span>)
 </pre></div>

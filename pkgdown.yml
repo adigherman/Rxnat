@@ -2,7 +2,8 @@ pandoc: '2.2'
 pkgdown: 1.6.1.9000
 pkgdown_sha: cc9c7b1be8573f8af3453f6e5d0422d86c916701
 articles:
+  download_full_subject_data: download_full_subject_data.html
   rxnat: rxnat.html
   use_case: use_case.html
-last_built: 2020-09-17T19:07Z
+last_built: 2020-09-18T21:54Z
 
