@@ -1,0 +1,83 @@
+---
+title: "Rxnat - Download full subject data"
+author: "Adi Gherman"
+date: "9/17/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Download a full set of data for a specific subject from the NITRC XNAT repository
+
+The following tutorial will provide a fully functional example on how to download a full set of images for a specific subject, using the Rxnat package functionality.
+
+### Install the Rxnat package
+You can install `Rxnat` from Neuroconductor with:
+``` {r, eval = FALSE}
+source("https://neuroconductor.org/neurocLite.R")
+neuro_install('Rxnat')
+```
+
+### Setting up system environment variables
+To use system environment variables we need to add them to the `.Renviron` file located in the user's home folder. Use `Sys.getenv("HOME")` to get the path (for unix/osx users the location can be easily accessed with ~, eg. `vi ~/.Renviron`).
+The `Rxnat` package will be able to automatically read / use a system environment variable provided the following format is used: `XXXX_RXNAT_USER` and `XXXX_RXNAT_PASS`. `XXXX` is provided as an argument when an XNAT connection is initiated. 
+
+As an example `NITRC` is used as argument and the system environment variables names should be `NITRC_RXNAT_USER`, and `NITRC_RXNAT_PASS`.
+``` {r, eval = TRUE}
+library(Rxnat)
+library(dplyr)
+nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')
+```
+
+### Retrieve list of subjects
+To retrieve the full list of subjects for the `nitrc` XNAT connection, we will use the `nitrc$subjects()` function.
+``` {r, eval = TRUE}
+nitrc_subjects <- nitrc$subjects()
+head(nitrc_subjects)
+```
+
+### Retrieve list of experiments
+To retrieve the full list of experiments for the `nitrc` XNAT connection, we will use the `nitrc$experiments()` function.
+``` {r, eval = TRUE}
+nitrc_experiments <- nitrc$experiments()
+head(nitrc_experiments)
+```
+
+### Get list of all experiments associated with a subject
+For the purpose of this example, we would like to identify a subject that has more than one experiments associated with his id. In order to figure out a good subject ID example, we will filter and select all subjects with more than 1 experiment associated.
+``` {r, eval = TRUE}
+multi_session = nitrc_experiments %>% 
+  group_by(subject) %>% 
+  mutate(n_sessions = n()) %>% 
+  filter(n_sessions > 1)
+head(multi_session)
+```
+
+We will select the first subject ID (`UCLA_51209`) to continue our example. 
+``` {r, eval = TRUE}
+subject_id <- "UCLA_51209"
+subject_experiments = nitrc_experiments[ nitrc_experiments$subject %in% subject_id, ]
+head(subject_experiments)
+```
+
+<!--
+### Retrieve all resources associated with a subject ID
+Now that we have all the experiments associated with a subject ID, we can list all the available resources. 
+``` {r, eval=TRUE}
+all_resources = lapply(subject_experiments$ID, function(r) {
+  nitrc$get_xnat_experiment_resources(experiment_ID = r)
+})
+head(all_resources)
+```
+-->
+
+### Download all resources
+We will use the `download_dir()` function to download of all resources associated with the selected subject ID.
+``` {r, eval = TRUE}
+download_data = lapply(subject_experiments$ID, function(r) {
+  nitrc$download_dir(experiment_ID = r, extract = TRUE)
+})
+head(download_data)
+```
