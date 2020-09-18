@@ -79,5 +79,4 @@ We will use the `download_dir()` function to download of all resources associate
 download_data = lapply(subject_experiments$ID, function(r) {
   nitrc$download_dir(experiment_ID = r, extract = TRUE)
 })
-head(download_data)
 ```
