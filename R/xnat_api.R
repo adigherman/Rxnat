@@ -265,6 +265,7 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
 #' xxx is provided by the \code{xnat_name} parameter
 #' @param xnat_name prefix to use for retrieving the proper username/pass
 #' system variables for a specific XNAT server
+#' @param ... additional arguments passed to \code{\link{curlPerform}}.
 #' @examples
 #' ## Connect to the NITRC.ORG database
 #' \dontrun{xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')}
@@ -277,9 +278,9 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
 #' @importFrom httr set_cookies timeout
 #' @importFrom tibble as_tibble
 #' @export
-xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
+xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL, ...)
 {
-  xnat_call <- function(request, customrequest = 'GET', data='') {
+  xnat_call <- function(request, customrequest = 'GET', data='', ...) {
     if(is.null(jsid)) {
       stop('not connected')
     }
@@ -294,7 +295,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL)
                 customrequest = customrequest,
                 postfields = data,
                 ssl.verifypeer = FALSE,
-                cookie = paste('JSESSIONID=', jsid, sep = ''))
+                cookie = paste('JSESSIONID=', jsid, sep = ''),
+                ...)
     msg = ""
     if (!is.null(xnat_name)) {
       msg = paste0(

@@ -5,7 +5,7 @@
 \alias{xnat_connect}
 \title{Make a connection to an XNAT server}
 \usage{
-xnat_connect(base_url, username = NULL, password = NULL, xnat_name = NULL)
+xnat_connect(base_url, username = NULL, password = NULL, xnat_name = NULL, ...)
 }
 \arguments{
 \item{base_url}{the URL for the XNAT server}
@@ -20,6 +20,8 @@ xxx is provided by the \code{xnat_name} parameter}
 
 \item{xnat_name}{prefix to use for retrieving the proper username/pass
 system variables for a specific XNAT server}
+
+\item{...}{additional arguments passed to \code{\link{curlPerform}}.}
 }
 \value{
 \code{projects}
