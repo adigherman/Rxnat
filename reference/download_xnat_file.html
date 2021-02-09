@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -79,12 +81,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -109,7 +105,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adigherman/Rxnat/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,7 +131,7 @@
     <p>Download a single file from XNAT</p>
     </div>
 
-    <pre class="usage"><span class='fu'>download_xnat_file</span>(<span class='kw'>conn</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>download_xnat_file</span><span class='op'>(</span><span class='va'>conn</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,11 +158,11 @@ error Should function error if download failed?</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## file_path is retrieved using the get_scan_resources() function</span>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>xnat_central_conn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='xnat_connection.html'>xnat_connect</a></span>(<span class='st'>'https://central.xnat.org'</span>, xnat_name=<span class='st'>"CENTRAL"</span>)
-<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_scan_resources.html'>get_scan_resources</a></span>(<span class='kw'>xnat_central_conn</span>,<span class='st'>'CENTRAL_E00760'</span>)
-<span class='fu'>download_xnat_file</span>(<span class='kw'>xnat_central_conn</span>,<span class='kw'>r</span><span class='op'>$</span><span class='kw'>URI</span>[<span class='fl'>1</span>])
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>xnat_central_conn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='xnat_connection.html'>xnat_connect</a></span><span class='op'>(</span><span class='st'>'https://central.xnat.org'</span>, xnat_name<span class='op'>=</span><span class='st'>"CENTRAL"</span><span class='op'>)</span>
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_scan_resources.html'>get_scan_resources</a></span><span class='op'>(</span><span class='va'>xnat_central_conn</span>,<span class='st'>'CENTRAL_E00760'</span><span class='op'>)</span>
+<span class='fu'>download_xnat_file</span><span class='op'>(</span><span class='va'>xnat_central_conn</span>,<span class='va'>r</span><span class='op'>$</span><span class='va'>URI</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

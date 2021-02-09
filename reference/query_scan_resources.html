@@ -47,6 +47,8 @@ matching rows" />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -81,12 +83,6 @@ matching rows" />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -111,7 +107,7 @@ matching rows" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adigherman/Rxnat/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -139,7 +135,7 @@ specific query parameters and return a list of all
 matching rows</p>
     </div>
 
-    <pre class="usage"><span class='fu'>query_scan_resources</span>(<span class='kw'>conn</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>query_scan_resources</span><span class='op'>(</span><span class='va'>conn</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,8 +162,8 @@ should be used just to retrieve matching experiment IDs for downloading
 the queried data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) <span class='kw'>hcp</span> <span class='op'>&lt;-</span><span class='fu'><a href='xnat_connection.html'>xnat_connect</a></span>(<span class='st'>'https://db.humanconnectome.org'</span>, xnat_name = <span class='st'>"hcp"</span>)
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>query_scan_resources</span>(<span class='kw'>hcp</span>,age=<span class='st'>'26'</span>, project=<span class='st'>'HCP_500'</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='va'>hcp</span> <span class='op'>&lt;-</span><span class='fu'><a href='xnat_connection.html'>xnat_connect</a></span><span class='op'>(</span><span class='st'>'https://db.humanconnectome.org'</span>, xnat_name <span class='op'>=</span> <span class='st'>"hcp"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='fu'>query_scan_resources</span><span class='op'>(</span><span class='va'>hcp</span>,age<span class='op'>=</span><span class='st'>'26'</span>, project<span class='op'>=</span><span class='st'>'HCP_500'</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
