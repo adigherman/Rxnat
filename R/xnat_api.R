@@ -280,7 +280,7 @@ get_scan_parameters_search_xml <- function(subject_ID = NULL,
 #' @export
 xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL, ...)
 {
-  xnat_call <- function(request, customrequest = 'GET', data='', ...) {
+  xnat_call <- function(request, customrequest = 'GET', data='') {
     if(is.null(jsid)) {
       stop('not connected')
     }
@@ -645,7 +645,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL,
     curlPerform(url = paste(base_url, '/', sep = ''),
                 writefunction = reader$update,
                 headerfunction = header$update,
-                ssl.verifypeer = FALSE)
+                ssl.verifypeer = FALSE,
+                ...)
     jsid <<- NULL
     for(h in strsplit(header$value(), '\n')[[1]]) {
       if(substring(h, 1, 23) == 'Set-Cookie: JSESSIONID=') {
@@ -662,7 +663,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL,
                 headerfunction = header$update,
                 ssl.verifypeer = FALSE,
                 userpwd = paste(username, password, sep = ':'),
-                httpauth=1L)
+                httpauth=1L,
+                ...)
     status = parseHTTPHeader(header$value())['status']
     if (parseHTTPHeader(header$value())['status'] >= 400) {
       msg = paste0("XNAT call failed, message: ", 
