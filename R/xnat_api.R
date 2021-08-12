@@ -282,7 +282,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL,
 {
   xnat_call <- function(request, customrequest = 'GET', data='') {
     if(is.null(jsid)) {
-      stop('not connected')
+      message('not connected')
+      return(NULL)
     }
     reader <- basicTextGatherer()
     header <- basicTextGatherer()
@@ -323,7 +324,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL,
         msg = paste0(msg, ".  You may need to run xnat_connect again with", 
                      " credentials.")
       }
-      stop(msg)
+      message(msg)
+      return(NULL)
       # message("No internet connection or data source broken.")
       # return(NULL)
     }
@@ -401,7 +403,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL,
     }
     if(!is.null(project)) {
       if(!project %in% projects()$ID) {
-        stop(sprintf('unknown project "%s"', project))
+        message(sprintf('unknown project "%s"', project))
+        return(NULL)
       }
       rv <- .subjects[.subjects$project==project,]
       rownames(rv) <- 1:nrow(rv)
@@ -485,7 +488,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL,
     }
     if(!is.null(e_project)) {
       if(!e_project %in% projects()$ID) {
-        stop(sprintf('unknown project "%s"', e_project))
+        message(sprintf('unknown project "%s"', e_project))
+        return(NULL)
       }
       if(!is.null(e_subject)) {
         if(!e_subject %in% subjects(e_project)$label) {
@@ -654,7 +658,8 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL,
       }
     }
     if(is.null(jsid)) {
-      stop('error starting session')
+      message('error starting session')
+      return(NULL)
     }
   } else {
     credentials_given = TRUE
@@ -668,8 +673,9 @@ xnat_connect <- function(base_url, username=NULL, password=NULL, xnat_name=NULL,
     status = parseHTTPHeader(header$value())['status']
     if (parseHTTPHeader(header$value())['status'] >= 400) {
       msg = paste0("XNAT call failed, message: ", 
-                   parseHTTPHeader(header$value())['statusMessage'])    
-      stop(msg)
+                   parseHTTPHeader(header$value())['statusMessage'])   
+      message(msg)
+      return(NULL)
     }
     jsid <- reader$value()
   }

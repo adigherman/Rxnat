@@ -9,3 +9,5 @@
 paper_code.R
 use_case.R
 ^\.github$
+vignettes/use_case.Rmd
+vignettes/download_full_subject_data.Rmd
