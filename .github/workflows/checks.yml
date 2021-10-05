@@ -18,14 +18,18 @@ jobs:
       fail-fast: false
       matrix:
         config:
- #         - {os: macOS-latest,   r: 'devel'} <- this is broken
-          - {os: macOS-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
-          - {os: windows-latest, r: '3.6'}
-          - {os: ubuntu-16.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: '3.5',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: '3.4',     rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: macOS-latest,   r: '3.5',     r_ver: '3.5', latex: "true", vdiffr: false}
+          - {os: macOS-latest,   r: 'oldrel',  r_ver: '3.6', latex: "true", vdiffr: false}
+          - {os: macOS-latest,   r: 'release', r_ver: '4.0', latex: "true", vdiffr: false}
+          - {os: macOS-latest,   r: 'devel',   r_ver: '4.1', latex: "true", vdiffr: false}
+          - {os: windows-latest, r: '3.5',     r_ver: '3.5'}
+          - {os: windows-latest, r: 'oldrel',  r_ver: '3.6'}
+          - {os: windows-latest, r: 'release', r_ver: '4.0'}
+          - {os: windows-latest, r: 'devel',   r_ver: '4.1'}
+          - {os: ubuntu-20.04,   r: '3.5',     r_ver: '3.5', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: 'oldrel',  r_ver: '3.6', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: 'release', r_ver: '4.0', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", coveralls: "true"}
+          - {os: ubuntu-20.04,   r: 'devel',   r_ver: '4.1', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
  
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
