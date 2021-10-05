@@ -17,6 +17,6 @@ Suggests:
 License: GPL-2
 Encoding: UTF-8
 ByteCompile: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 BugReports: https://github.com/adigherman/Rxnat/issues
